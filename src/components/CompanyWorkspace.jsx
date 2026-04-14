@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CompanyBar } from './CompanyBar.jsx';
 import { SummaryPanel } from './SummaryPanel.jsx';
 import { ValuationsPanel } from './ValuationsPanel.jsx';
@@ -6,9 +6,17 @@ import { PlaceholderPanel } from './PlaceholderPanel.jsx';
 import { FinancialsPanel } from './FinancialsPanel.jsx';
 import { CapTablePanel } from './CapTablePanel.jsx';
 import { CompanyWaterfallsPanel } from './CompanyWaterfallsPanel.jsx';
+import { useUiState } from '../lib/uiState.jsx';
 
 export function CompanyWorkspace() {
+  const { pendingCompanySecondaryTab, clearPendingCompanySecondaryTab } = useUiState();
   const [activeSecondary, setActiveSecondary] = useState('summary');
+
+  useEffect(() => {
+    if (!pendingCompanySecondaryTab) return;
+    setActiveSecondary(pendingCompanySecondaryTab);
+    clearPendingCompanySecondaryTab();
+  }, [pendingCompanySecondaryTab, clearPendingCompanySecondaryTab]);
 
   return (
     <div className="company-workspace" aria-label="Company workspace">

@@ -1,27 +1,69 @@
+import { useEffect, useState } from 'react';
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
+import { useUiState } from '../lib/uiState.jsx';
+
+const DEFAULT_CAP_TERTIARY = 'cap-table';
 
 export function CapTablePanel() {
   const { selectedFund, companies } = useAppData();
+  const { pendingCapTableTertiary, clearPendingCapTableTertiary } = useUiState();
   const selectedFundName = selectedFund?.name ?? 'All Funds';
+  const [activeCapTertiary, setActiveCapTertiary] = useState(DEFAULT_CAP_TERTIARY);
+
+  useEffect(() => {
+    if (!pendingCapTableTertiary) return;
+    setActiveCapTertiary(pendingCapTableTertiary);
+    clearPendingCapTableTertiary();
+  }, [pendingCapTableTertiary, clearPendingCapTableTertiary]);
 
   return (
     <div className="sec-panel" id="sec-panel-cap-table" role="tabpanel" aria-label="Cap Table">
       <div className="content company-summary">
         <div className="tm-bar tm-bar--cap" role="toolbar" aria-label="Tertiary menu">
           <div className="tm-left">
-            <div className="tm-chip">
+            <div
+              className={`tm-chip${activeCapTertiary === 'cap-table' ? ' is-active' : ''}`}
+              role="tab"
+              tabIndex={0}
+              aria-selected={activeCapTertiary === 'cap-table'}
+              onClick={() => setActiveCapTertiary('cap-table')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setActiveCapTertiary('cap-table');
+                }
+              }}
+            >
               <span className="tm-chip-text">Cap Table</span>
               <MaterialIcon name="more_vert" size={16} color="var(--neutral-900)" />
             </div>
-            <button type="button" className="tm-tab" aria-label="Fund Ownership">
+            <button
+              type="button"
+              className={`tm-tab${activeCapTertiary === 'fund-ownership' ? ' is-active' : ''}`}
+              aria-label="Fund Ownership"
+              aria-pressed={activeCapTertiary === 'fund-ownership'}
+              onClick={() => setActiveCapTertiary('fund-ownership')}
+            >
               Fund Ownership
             </button>
-            <button type="button" className="tm-tab" aria-label="Breakpoint Analysis">
+            <button
+              type="button"
+              className={`tm-tab${activeCapTertiary === 'breakpoint-analysis' ? ' is-active' : ''}`}
+              aria-label="Breakpoint Analysis"
+              aria-pressed={activeCapTertiary === 'breakpoint-analysis'}
+              onClick={() => setActiveCapTertiary('breakpoint-analysis')}
+            >
               Breakpoint Analysis
             </button>
-            <button type="button" className="tm-tab" aria-label="Cash Flow Leader">
-              Cash Flow Leadger
+            <button
+              type="button"
+              className={`tm-tab${activeCapTertiary === 'cash-flow-ledger' ? ' is-active' : ''}`}
+              aria-label="Cash Flow Ledger"
+              aria-pressed={activeCapTertiary === 'cash-flow-ledger'}
+              onClick={() => setActiveCapTertiary('cash-flow-ledger')}
+            >
+              Cash Flow Ledger
             </button>
             <button type="button" className="tm-iconbtn" aria-label="Add view">
               <MaterialIcon name="add" size={16} color="var(--neutral-600)" />
@@ -95,4 +137,3 @@ export function CapTablePanel() {
     </div>
   );
 }
-

@@ -1,9 +1,28 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 const UiStateContext = createContext(null);
 
 export function UiStateProvider({ children }) {
   const [pinnedTabs, setPinnedTabs] = useState([]); // [{ id: 'valuations', label: 'Valuations' }, ...]
+  const [pendingCompanySecondaryTab, setPendingCompanySecondaryTab] = useState(null);
+  const [pendingCapTableTertiary, setPendingCapTableTertiary] = useState(null);
+
+  const queueCompanySecondaryTab = useCallback((tab) => {
+    setPendingCompanySecondaryTab(tab);
+    if (tab !== 'cap-table') setPendingCapTableTertiary(null);
+  }, []);
+
+  const clearPendingCompanySecondaryTab = useCallback(() => {
+    setPendingCompanySecondaryTab(null);
+  }, []);
+
+  const queueCapTableTertiary = useCallback((tabId) => {
+    setPendingCapTableTertiary(tabId);
+  }, []);
+
+  const clearPendingCapTableTertiary = useCallback(() => {
+    setPendingCapTableTertiary(null);
+  }, []);
 
   function pinTab(tab) {
     setPinnedTabs((prev) => {
@@ -21,8 +40,22 @@ export function UiStateProvider({ children }) {
       pinnedTabs,
       pinTab,
       unpinTab,
+      pendingCompanySecondaryTab,
+      queueCompanySecondaryTab,
+      clearPendingCompanySecondaryTab,
+      pendingCapTableTertiary,
+      queueCapTableTertiary,
+      clearPendingCapTableTertiary,
     }),
-    [pinnedTabs]
+    [
+      pinnedTabs,
+      pendingCompanySecondaryTab,
+      queueCompanySecondaryTab,
+      clearPendingCompanySecondaryTab,
+      pendingCapTableTertiary,
+      queueCapTableTertiary,
+      clearPendingCapTableTertiary,
+    ]
   );
 
   return React.createElement(UiStateContext.Provider, { value }, children);
