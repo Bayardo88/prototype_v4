@@ -37,6 +37,15 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
     return primary.concat(fallback.slice(0, MIN_ITEMS - primary.length));
   }, [companies, q, selectedFirm?.id, selectedFund?.id]);
 
+  const displayItems = useMemo(() => {
+    if (items.length >= MIN_ITEMS) return items;
+    const padded = items.slice();
+    for (let i = padded.length; i < MIN_ITEMS; i += 1) {
+      padded.push({ id: `placeholder-${i}`, name: 'Company Name', __placeholder: true });
+    }
+    return padded;
+  }, [items]);
+
   return (
     <div className="company-dd" role="menu" aria-label="Companies">
       <div className="company-dd-search" role="search">
@@ -63,20 +72,25 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
           <span className="company-dd-text">See All Companies</span>
         </button>
 
-        {items.map((c) => (
+        {displayItems.map((c) => (
           <button
             key={c.id}
             type="button"
             className="company-dd-item"
             role="menuitem"
+            disabled={!!c.__placeholder}
+            aria-disabled={!!c.__placeholder}
             onClick={() => {
+              if (c.__placeholder) return;
               setSelectedCompanyId(c.id);
               onSelectCompany?.(c.id);
               onClose?.();
             }}
           >
             <span className="company-dd-text">{c.name}</span>
-            <img className="company-dd-chevron" src={CHEVRON_RIGHT_IMG} alt="" aria-hidden="true" />
+            {!c.__placeholder && (
+              <img className="company-dd-chevron" src={CHEVRON_RIGHT_IMG} alt="" aria-hidden="true" />
+            )}
           </button>
         ))}
       </div>
