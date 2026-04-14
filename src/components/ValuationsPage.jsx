@@ -1,8 +1,10 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
+import { useState } from 'react';
 
 export function ValuationsPage() {
   const { selectedFirm, selectedFund, companies } = useAppData();
+  const [bulkMode, setBulkMode] = useState(false);
 
   return (
     <div className="sec-panel" id="sec-panel-valuations" role="tabpanel">
@@ -50,7 +52,12 @@ export function ValuationsPage() {
             <button type="button" className="prod-iconbtn" aria-label="Fit screen">
               <MaterialIcon name="fit_screen" size={16} color="var(--neutral-500)" />
             </button>
-            <button type="button" className="subbar-action">
+            <button
+              type="button"
+              className={`subbar-action${bulkMode ? ' is-active' : ''}`}
+              aria-pressed={bulkMode}
+              onClick={() => setBulkMode((v) => !v)}
+            >
               Bulk Actions
               <MaterialIcon name="expand_more" size={16} color="var(--brand-500)" />
             </button>
@@ -65,7 +72,7 @@ export function ValuationsPage() {
             <table className="prod-table valuations-table">
               <thead>
                 <tr>
-                  <th className="chk" />
+                  {bulkMode && <th className="chk" />}
                   <th>Company</th>
                   <th>Valuation Date</th>
                   <th>Valuation Status</th>
@@ -82,9 +89,11 @@ export function ValuationsPage() {
                 {(companies.length ? companies.slice(0, 28) : Array.from({ length: 28 }).map((_, i) => ({ id: i, name: '6.4.3 regression' }))).map(
                   (c, idx) => (
                   <tr key={c.id}>
-                    <td className="chk">
-                      <input type="checkbox" aria-label="Select row" />
-                    </td>
+                    {bulkMode && (
+                      <td className="chk">
+                        <input type="checkbox" aria-label="Select row" />
+                      </td>
+                    )}
                     <td className="linkish">{c.name}</td>
                     <td>11/12/2026</td>
                     <td>
@@ -104,7 +113,7 @@ export function ValuationsPage() {
                   </tr>
                 ))}
                 <tr className="total-row">
-                  <td className="chk" />
+                  {bulkMode && <td className="chk" />}
                   <td>Total</td>
                   <td />
                   <td />

@@ -825,6 +825,10 @@
       cursor: pointer;
       white-space: nowrap;
     }
+    .subbar-action.is-active {
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 2px rgba(3, 125, 232, 0.15);
+    }
     .subbar-save {
       font: inherit;
       font-size: 11px;
