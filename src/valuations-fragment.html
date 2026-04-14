@@ -1,0 +1,616 @@
+<div class="tertiary-menu">
+  <div class="tm-left">
+    <div class="tert-tab active">
+      Cap Table
+      <span class="material-symbols-outlined ms-14 ms-tert-dd" aria-hidden="true">more_vert</span>
+    </div>
+    <div class="tert-tab">GPC</div>
+    <div class="tert-tab">GT</div>
+    <div class="tert-tab">Backsolve</div>
+    <div class="tert-tab">Future Exit</div>
+    <div class="tert-tab">Discounted Cash Flow</div>
+    <div class="tert-tab">External Valuation</div>
+    <div class="tert-add">
+      <span class="material-symbols-outlined ms-16 ms-muted" aria-hidden="true">add</span>
+    </div>
+  </div>
+  <div class="tm-right">
+    <!-- AI -->
+    <div class="ai-btn">
+      <span class="material-symbols-outlined ms-ai-star" aria-hidden="true">auto_awesome</span>
+    </div>
+    <!-- Currency -->
+    <div class="currency-sel">
+      <div class="cur-usd">USD</div>
+      <div class="cur-thousands">($) Thousands</div>
+    </div>
+    <!-- Fit screen -->
+    <div class="icon-btn">
+      <span class="material-symbols-outlined ms-14 ms-muted" aria-hidden="true">fit_screen</span>
+    </div>
+    <!-- Filter -->
+    <div class="icon-btn">
+      <span class="material-symbols-outlined ms-14 ms-muted" aria-hidden="true">filter_list</span>
+    </div>
+    <!-- Save -->
+    <div class="save-btn">
+      <span class="save-text">Save</span>
+      <span class="material-symbols-outlined ms-14 ms-save-chev" aria-hidden="true">expand_more</span>
+    </div>
+    <!-- Meatball -->
+    <div class="meatball">
+      <span class="material-symbols-outlined ms-20 ms-muted" aria-hidden="true">more_vert</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     CONTENT AREA
+════════════════════════════════════════ -->
+<div class="content">
+
+  <!-- ── VALUATION SECTION 1 ── -->
+  <div class="val-section">
+    <table class="val-table">
+      <colgroup>
+        <col style="width:185px;"><!-- Valuation Approach -->
+        <col style="width:121px;"><!-- Enterprise Value -->
+        <col style="width:118px;"><!-- Equity Value -->
+        <col style="width:113px;"><!-- CSE Backsolve -->
+        <col style="width:113px;"><!-- OPM Backsolve -->
+        <col style="width:113px;"><!-- Waterfall -->
+        <col style="width:113px;"><!-- CSE -->
+        <col style="width:113px;"><!-- OPM -->
+        <col style="width:171px;"><!-- Add column -->
+      </colgroup>
+      <thead>
+        <!-- Section header row -->
+        <tr class="section-header-row">
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;">
+              <span class="material-symbols-outlined ms-12 ms-sh-chev" style="flex-shrink:0" aria-hidden="true">expand_more</span>
+              <span class="sh-valuation-summary">Valuation Summary</span>
+            </div>
+          </td>
+          <td class="sh-group">Enterprise Value</td>
+          <td colspan="6" class="sh-group">Allocation Scenarios</td>
+          <td>
+            <div class="sh-add" style="display:flex;align-items:center;gap:4px;">
+              <span class="material-symbols-outlined ms-16 ms-sh-add" style="flex-shrink:0" aria-hidden="true">add</span>
+              Add Allocation Scenario
+            </div>
+          </td>
+        </tr>
+        <!-- Column sub-headers -->
+        <tr class="col-header-row">
+          <td>
+            <div class="row-label header-sub">
+              Valuation Approach
+              <span class="material-symbols-outlined ms-14 ms-brand-800" style="flex-shrink:0" aria-hidden="true">tune</span>
+            </div>
+          </td>
+          <td style="text-align:right;">Enterprise Value</td>
+          <td style="text-align:right;">Equity Value</td>
+          <td style="text-align:right;">CSE Backsolve...</td>
+          <td style="text-align:right;">OPM Backsolve...</td>
+          <td style="text-align:right;">Waterfall</td>
+          <td style="text-align:right;">CSE</td>
+          <td style="text-align:right;">OPM</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- GPC -->
+        <tr>
+          <td class="row-label indented">GPC</td>
+          <td class="data-right"><span class="data-link">$80,520</span></td>
+          <td class="data-right"><span class="data-link">$87,525</span></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <!-- GT -->
+        <tr>
+          <td class="row-label indented">GT</td>
+          <td class="data-right"><span class="data-link">$76,714</span></td>
+          <td class="data-right"><span class="data-link">$83,719</span></td>
+          <td></td>
+          <td></td>
+          <td class="data-right"><span class="data-link">50.0%</span></td>
+          <td class="data-right"><span class="data-link">50.0%</span></td>
+          <td class="data-right"><span class="data-link">50.0%</span></td>
+          <td></td>
+        </tr>
+        <!-- Backsolve Valuation 1 -->
+        <tr>
+          <td class="row-label indented"><span class="data-link">Backsolve Valuation</span></td>
+          <td class="data-right"><span class="data-link">$35,755</span></td>
+          <td class="data-right"><span class="data-link">$42,760</span></td>
+          <td></td>
+          <td class="data-right"><span class="data-link">100.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td></td>
+        </tr>
+        <!-- Backsolve Valuation 2 -->
+        <tr>
+          <td class="row-label indented"><span class="data-link">Backsolve Valuation</span></td>
+          <td class="data-right"><span class="data-link">$58,147</span></td>
+          <td class="data-right"><span class="data-link">$85,152</span></td>
+          <td class="data-right"><span class="data-link">100.0%</span></td>
+          <td></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td></td>
+        </tr>
+        <!-- DCF -->
+        <tr>
+          <td class="row-label indented"><span class="data-link">DCF</span></td>
+          <td class="data-right"><span class="data-link">$21,780</span></td>
+          <td class="data-right"><span class="data-link">$28,785</span></td>
+          <td></td><td></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td></td>
+        </tr>
+        <!-- Scenario Equity Value -->
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Scenario Equity Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td></td>
+          <td class="data-right data-bold">$85,152</td>
+          <td class="data-right data-bold">$42,760</td>
+          <td></td>
+          <td class="data-right data-bold">$85,622</td>
+          <td class="data-right data-bold">$85,622</td>
+          <td class="data-right data-bold">$85,622</td>
+          <td></td>
+        </tr>
+        <!-- Scenario Weighting -->
+        <tr>
+          <td class="row-label indented">Scenario Weighting/Probability</td>
+          <td></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">0.0%</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">100.0%</span></td>
+          <td></td>
+        </tr>
+        <!-- Weighted Equity Value -->
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Weighted Equity Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+          <td class="data-right data-bold">$85,622</td>
+          <td></td>
+        </tr>
+        <!-- Debt -->
+        <tr>
+          <td class="row-label indented">Debt</td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+          <td class="data-right">$0</td>
+          <td></td>
+        </tr>
+        <!-- Cash -->
+        <tr>
+          <td class="row-label indented">Cash</td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+          <td class="data-right">$7,005</td>
+          <td></td>
+        </tr>
+        <!-- Weighted Enterprise Value -->
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Weighted Enterprise Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+          <td class="data-right data-bold">$78,617</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── SECTION SEPARATOR ── -->
+  <div class="section-sep"></div>
+
+  <!-- ── VALUATION SECTION 2 ── -->
+  <div class="val-section">
+    <table class="val-table">
+      <colgroup>
+        <col style="width:185px;">
+        <col style="width:121px;">
+        <col style="width:118px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:171px;">
+      </colgroup>
+      <thead>
+        <tr class="section-header-row">
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;">
+              <span class="material-symbols-outlined ms-12 ms-sh-chev" style="flex-shrink:0" aria-hidden="true">expand_more</span>
+              <span class="sh-valuation-summary">Valuation Summary</span>
+            </div>
+          </td>
+          <td class="sh-group">Allocation Scenario</td>
+          <td colspan="6" class="sh-group" style="color:var(--neutral-500);font-style:italic;">
+            $9,000,000 &nbsp; $9,000,000 &nbsp; $9,000,000 &nbsp; $9,000,000 &nbsp; $9,000,000
+          </td>
+          <td>
+            <div class="sh-add" style="display:flex;align-items:center;gap:4px;">
+              <span class="material-symbols-outlined ms-16 ms-sh-add" style="flex-shrink:0" aria-hidden="true">add</span>
+              Add Allocation Scenario
+            </div>
+          </td>
+        </tr>
+        <tr class="col-header-row">
+          <td>
+            <div class="row-label header-sub">
+              Valuation Approach
+              <span class="material-symbols-outlined ms-14 ms-brand-800" style="flex-shrink:0" aria-hidden="true">tune</span>
+            </div>
+          </td>
+          <td style="text-align:right;">Enterprise Value</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label indented">GPC</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">GT</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented"><span class="data-link">Backsolve Valuation</span></td>
+          <td class="data-right data-cell-date data-cell-date--semibold">11/3/2025</td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented"><span class="data-link">Backsolve Valuation</span></td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented"><span class="data-link">DCF</span></td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Scenario Equity Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$16,943,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">Scenario Weighting/Probably</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$16,943,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Weighted Equity Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$16,943,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">Debt</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">Cash</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Weighted Enterprise Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── SECTION SEPARATOR ── -->
+  <div class="section-sep"></div>
+
+  <!-- ── VALUATION SECTION 3 ── -->
+  <div class="val-section">
+    <table class="val-table">
+      <colgroup>
+        <col style="width:185px;">
+        <col style="width:121px;">
+        <col style="width:118px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:113px;">
+        <col style="width:171px;">
+      </colgroup>
+      <thead>
+        <tr class="section-header-row">
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;">
+              <span class="material-symbols-outlined ms-12 ms-sh-chev" style="flex-shrink:0" aria-hidden="true">expand_more</span>
+              <span class="sh-valuation-summary">Valuation Summary</span>
+            </div>
+          </td>
+          <td class="sh-group">Allocation Scenario</td>
+          <td colspan="6" class="sh-group" style="color:var(--neutral-500);font-style:italic;">
+            $9,000,000 &nbsp; $9,000,000 &nbsp; $9,000,000 &nbsp; $9,000,000 &nbsp; $9,000,000
+          </td>
+          <td>
+            <div class="sh-add" style="display:flex;align-items:center;gap:4px;">
+              <span class="material-symbols-outlined ms-16 ms-sh-add" style="flex-shrink:0" aria-hidden="true">add</span>
+              Add Allocation Scenario
+            </div>
+          </td>
+        </tr>
+        <tr class="col-header-row">
+          <td>
+            <div class="row-label header-sub">
+              Valuation Approach
+              <span class="material-symbols-outlined ms-14 ms-brand-800" style="flex-shrink:0" aria-hidden="true">tune</span>
+            </div>
+          </td>
+          <td style="text-align:right;">Enterprise Value</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td style="text-align:right;">$9,000,000</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label indented">GPC</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td class="data-right"><span class="data-link">$17,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">GT</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td class="data-right"><span class="data-link">$2</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented"><span class="data-link">Backsolve Valuation</span></td>
+          <td class="data-right data-cell-date data-cell-date--semibold">11/3/2025</td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td class="data-right data-bold"><span class="data-link">$65,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented"><span class="data-link">Backsolve Valuation</span></td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td class="data-right"><span class="data-link">$16,943,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented"><span class="data-link">DCF</span></td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td class="data-right"><span class="data-link">$10,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Scenario Equity Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$16,943,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">Scenario Weighting/Probably</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$16,943,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td class="data-right"><span style="color:var(--brand-500)">$10,000,000</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Weighted Equity Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$16,943,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td class="data-right data-bold">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">Debt</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label indented">Cash</td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td class="data-right">$10,000,000</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="row-label bold" style="padding:4px 8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              Weighted Enterprise Value
+              <span class="material-symbols-outlined ms-14 ms-brand-800" aria-hidden="true">horizontal_rule</span>
+            </div>
+          </td>
+          <td class="data-right data-cell-date">11/3/2025</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td class="data-right data-bold">$25,000,000</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /content -->
