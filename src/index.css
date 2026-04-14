@@ -66,6 +66,7 @@
     .ms-sh-add { color: var(--brand-900); }
     .ms-brand-800 { color: var(--brand-800); }
     .ms-save-chev { color: var(--neutral-white); }
+    /* (deprecated) old Material Symbols AI icon helper */
     .ms-ai-star {
       font-size: 16px;
       width: 16px;
@@ -983,8 +984,18 @@
     .tm-right { display: flex; align-items: center; gap: 8px; }
     .ai-btn {
       background: var(--color-ai); border-radius: 4px;
-      padding: 4px; display: flex; align-items: center; cursor: pointer;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      border: none;
+      outline: none;
     }
+    .ai-btn:focus-visible { outline: 2px solid rgba(166, 20, 255, 0.35); outline-offset: 2px; }
+    .ai-btn-icon { width: 16px; height: 16px; display: block; }
     .currency-sel { display: flex; align-items: center; }
     .cur-usd {
       background: var(--neutral-white); border: 1px solid var(--neutral-200);
