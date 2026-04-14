@@ -1,6 +1,7 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { CompaniesDropdown } from './CompaniesDropdown.jsx';
+import { SearchModal } from './SearchModal.jsx';
 
 const LOGO_URL = 'https://placehold.co/34x32/01294C/9ACBF6?text=·';
 const AVATAR_URL = 'https://placehold.co/32x32/E2E8F0/475569?text=·';
@@ -23,6 +24,7 @@ export function PrimaryMenu({
 }) {
   const hideContext = variant === 'home';
   const [companiesOpen, setCompaniesOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const companiesWrapRef = useRef(null);
 
   function onNavKeyDown(e, id) {
@@ -52,7 +54,25 @@ export function PrimaryMenu({
     };
   }, [companiesOpen]);
 
+  useEffect(() => {
+    function onKey(e) {
+      if (!((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) return;
+      const ae = document.activeElement;
+      const inOtherField =
+        !searchOpen &&
+        ae &&
+        (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA') &&
+        !ae.hasAttribute('data-search-modal-input');
+      if (inOtherField) return;
+      e.preventDefault();
+      setSearchOpen((v) => !v);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [searchOpen]);
+
   return (
+    <>
     <header className="primary-menu" role="banner">
       <div className="pm-left">
         <button type="button" className="pm-logo-btn" onClick={onLogoClick} aria-label="Home">
@@ -112,10 +132,18 @@ export function PrimaryMenu({
         )}
       </div>
       <div className="pm-right">
-        <div className="search-bar" role="search">
+        <button
+          type="button"
+          className="search-bar"
+          role="search"
+          aria-haspopup="dialog"
+          aria-expanded={searchOpen}
+          aria-controls={searchOpen ? 'search-modal-dialog' : undefined}
+          onClick={() => setSearchOpen(true)}
+        >
           <MaterialIcon name="search" size={16} color="var(--neutral-400)" />
           <span className="search-text">cmd + K</span>
-        </div>
+        </button>
         <div className="notif-btn" data-dot="true" aria-label="Notifications, 6 unread">
           <MaterialIcon name="notifications" size={16} fill={1} color="var(--neutral-300)" />
           <span className="notif-badge">6</span>
@@ -134,5 +162,7 @@ export function PrimaryMenu({
         </div>
       </div>
     </header>
+    <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
   );
 }
