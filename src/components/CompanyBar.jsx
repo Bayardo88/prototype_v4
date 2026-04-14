@@ -52,14 +52,36 @@ export function CompanyBar({ activeSecondary, onSecondaryChange }) {
         </nav>
       </div>
       <div className="cb-right">
-        <div className="info-lbl">
-          <span className="info-lbl-name">Equity Value</span>
-          <span className="info-lbl-val">$34,560,000</span>
-        </div>
-        <div className="info-lbl">
-          <span className="info-lbl-name">Unrealized Firm Total</span>
-          <span className="info-lbl-val">$48,871,695</span>
-        </div>
+        {activeSecondary === 'financials' ? (
+          <div className="fin-selectors" aria-label="Financial selectors">
+            <div className="fin-sel" aria-label="Financials Date">
+              <span className="fin-sel-label">Financials Date</span>
+              <span className="fin-sel-value">08/16/2027</span>
+              <MaterialIcon name="calendar_today" size={16} color="var(--neutral-500)" />
+            </div>
+            <div className="fin-sel" aria-label="Financial Version">
+              <span className="fin-sel-label">Financial Version</span>
+              <span className="fin-sel-value">Primary Financial</span>
+              <MaterialIcon name="expand_more" size={16} color="var(--neutral-500)" />
+            </div>
+          </div>
+        ) : activeSecondary === 'cap-table' ? (
+          <div className="cap-selector" aria-label="Cap table selector">
+            <span className="cap-selector-value">Primary Cap Table</span>
+            <MaterialIcon name="expand_more" size={16} color="var(--neutral-500)" />
+          </div>
+        ) : (
+          <>
+            <div className="info-lbl">
+              <span className="info-lbl-name">Equity Value</span>
+              <span className="info-lbl-val">$34,560,000</span>
+            </div>
+            <div className="info-lbl">
+              <span className="info-lbl-name">Unrealized Firm Total</span>
+              <span className="info-lbl-val">$48,871,695</span>
+            </div>
+          </>
+        )}
         <div className="ver-sel ver-sel-only">
           <span className="ver-sel-text">Valuation Version - 12/31/2026</span>
           <MaterialIcon name="expand_more" size={14} color="var(--brand-500)" />

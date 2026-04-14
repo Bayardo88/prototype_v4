@@ -567,7 +567,52 @@
       overflow-wrap: break-word;
     }
     .ver-sel-only { display: none; }
-    .company-bar[data-secondary="valuations"] .ver-sel-only { display: flex; }
+    .company-bar[data-secondary="valuations"] .ver-sel-only,
+    .company-bar[data-secondary="waterfall"] .ver-sel-only { display: flex; }
+
+    /* Financials selectors (Navigation-V4 196:23247) */
+    .fin-selectors {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      height: 100%;
+    }
+    .fin-sel {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .fin-sel-label {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--neutral-500);
+    }
+    .fin-sel-value {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--brand-500);
+    }
+    .cap-selector {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cap-selector-value {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--brand-500);
+    }
 
     /* ── SECONDARY: SUMMARY PAGE ── */
     .summary-page { min-width: 0; max-width: 1120px; margin: 0 auto; padding: 16px 16px 48px; }
@@ -952,6 +997,77 @@
     }
     .company-summary-scroll { overflow: auto; }
     .company-summary-table { min-width: 1180px; }
+
+    /* ── COMPANY: WATERFALL (Navigation-V4 266:129756) ── */
+    .company-waterfall {
+      background: var(--neutral-white);
+      padding: 0;
+      border: 1px solid var(--neutral-200);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .waterfall-grid {
+      display: grid;
+      grid-template-columns: 477px 1fr;
+      gap: 16px;
+      padding: 8px;
+      align-items: start;
+      min-height: 520px;
+    }
+    .waterfall-table {
+      border: 1px solid var(--neutral-200);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--neutral-white);
+    }
+    .wf-row {
+      display: grid;
+      grid-template-columns: 185px 1fr;
+    }
+    .wf-cell {
+      padding: 4px 8px;
+      min-height: 26px;
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      line-height: 14px;
+      color: var(--brand-800);
+      border-bottom: 1px solid transparent;
+    }
+    .wf-head .wf-cell {
+      min-height: 40px;
+      padding: 8px;
+      font-weight: 600;
+      color: var(--brand-900);
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-white);
+    }
+    .wf-band .wf-cell {
+      background: var(--neutral-100);
+      border-bottom: 1px solid var(--neutral-200);
+      font-weight: 600;
+    }
+    .wf-alt .wf-cell { background: var(--neutral-100); }
+    .wf-left { border-right: 1px solid var(--neutral-200); }
+    .wf-right { justify-content: flex-end; color: var(--text-readable); font-weight: 300; }
+    .wf-strong { font-weight: 600; color: var(--brand-800); }
+    .wf-empty { color: transparent; }
+    .waterfall-empty {
+      min-height: 320px;
+      background: transparent;
+    }
+    .waterfall-empty-head {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand-900);
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 14px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .waterfall-empty-title { white-space: nowrap; }
 
     /* ── PRODUCT PAGES (Waterfalls / Valuations / Documents / Reports) ── */
     .prod-page { background: var(--neutral-100); padding: 0; min-height: calc(100vh - var(--primary-h)); }
