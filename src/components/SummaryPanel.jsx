@@ -1,7 +1,9 @@
 import { useAppData } from '../lib/appData.js';
+import { MaterialIcon } from './MaterialIcon.jsx';
 
 export function SummaryPanel() {
-  const { selectedCompany } = useAppData();
+  const { selectedFund, companies } = useAppData();
+  const selectedFundName = selectedFund?.name ?? 'All Funds';
   return (
     <div
       className="sec-panel"
@@ -9,116 +11,86 @@ export function SummaryPanel() {
       role="tabpanel"
       aria-labelledby="sec-tab-summary"
     >
-      <div className="content summary-page">
-        <h1 className="sum-page-title">Summary</h1>
-        <p className="sum-page-sub">{selectedCompany?.name ?? 'Company'} · Measurement date 01/17/2024 · Draft</p>
-        <div className="sum-sec-head">Company Overview</div>
-        <div className="sum-kpi-grid">
-          <div className="sum-kpi">
-            <div className="sum-kpi-label">Total cost</div>
-            <div className="sum-kpi-value">$24,180,000</div>
-            <div className="sum-kpi-sub">Across all funds</div>
+      <div className="content company-summary">
+        <div className="tm-bar" role="toolbar" aria-label="Tertiary menu">
+          <div className="tm-left">
+            <div className="tm-chip">
+              <span className="tm-chip-text">Summary</span>
+              <MaterialIcon name="more_vert" size={16} color="var(--neutral-900)" />
+            </div>
+            <button type="button" className="tm-tab" aria-label="Company Overview">
+              Company Overview
+            </button>
+            <button type="button" className="tm-tab" aria-label="At a Glance">
+              At a Glance
+            </button>
+            <button type="button" className="tm-iconbtn" aria-label="Add view">
+              <MaterialIcon name="add" size={16} color="var(--neutral-600)" />
+            </button>
           </div>
-          <div className="sum-kpi">
-            <div className="sum-kpi-label">Fair value</div>
-            <div className="sum-kpi-value positive">$34,560,000</div>
-            <div className="sum-kpi-sub">Mark as of measurement date</div>
-          </div>
-          <div className="sum-kpi">
-            <div className="sum-kpi-label">Value creation</div>
-            <div className="sum-kpi-value positive">$10,380,000</div>
-            <div className="sum-kpi-sub">FV − total cost</div>
-          </div>
-          <div className="sum-kpi">
-            <div className="sum-kpi-label">Gross MOIC</div>
-            <div className="sum-kpi-value">1.43x</div>
-            <div className="sum-kpi-sub">Fair value / cost</div>
-          </div>
-          <div className="sum-kpi">
-            <div className="sum-kpi-label">Gross IRR</div>
-            <div className="sum-kpi-value positive">28.4%</div>
-            <div className="sum-kpi-sub">Since first investment</div>
-          </div>
-          <div className="sum-kpi">
-            <div className="sum-kpi-label">DPI</div>
-            <div className="sum-kpi-value">0.12x</div>
-            <div className="sum-kpi-sub">Distributions / paid-in</div>
+
+          <div className="tm-right">
+            <button className="ai-btn" type="button" aria-label="AI">
+              <img
+                className="ai-btn-icon"
+                src="https://www.figma.com/api/mcp/asset/06b36e9e-8896-4db1-9b28-4ae63dedb08e"
+                alt=""
+                aria-hidden="true"
+              />
+            </button>
+
+            <div className="tm-currency" aria-label="Currency">
+              <div className="tm-cur-usd">USD</div>
+              <div className="tm-cur-thousands">($) Thousands</div>
+            </div>
+
+            <button type="button" className="tm-iconbtn" aria-label="Fit screen">
+              <MaterialIcon name="fit_screen" size={16} color="var(--neutral-500)" />
+            </button>
+            <button type="button" className="tm-iconbtn" aria-label="Filter">
+              <MaterialIcon name="filter_list" size={16} color="var(--neutral-500)" />
+            </button>
+
+            <button type="button" className="tm-save" aria-label="Save">
+              <span className="tm-save-text">Save</span>
+              <MaterialIcon name="expand_more" size={16} color="var(--neutral-white)" />
+            </button>
+
+            <button type="button" className="tm-meatball" aria-label="More">
+              <MaterialIcon name="more_vert" size={20} color="var(--neutral-500)" />
+            </button>
           </div>
         </div>
-        <div className="sum-split">
-          <div className="sum-split-col">
-            <div className="sum-card">
-              <div className="sum-card-h">Holdings</div>
-              <table className="sum-table">
-                <thead>
-                  <tr>
-                    <th>Security</th>
-                    <th className="num">Cost</th>
-                    <th className="num">Fair value</th>
-                    <th className="num">Ownership</th>
+
+        <div className="intel-table-scroll company-summary-scroll">
+          <table className="intel-table2 company-summary-table" aria-label="Summary table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Valuation Date</th>
+                <th>{selectedFundName}</th>
+                <th>Invested Capital</th>
+                <th>Invested Capital</th>
+                <th>Invested Capital</th>
+                <th className="intel-addcol">Add Allocation Scenario</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(companies.length ? companies.slice(0, 40) : Array.from({ length: 40 }).map((_, i) => ({ id: i, name: 'Company' }))).map(
+                (c, idx) => (
+                  <tr key={c.id}>
+                    <td className="intel-first">{c.name}</td>
+                    <td>11/3/2025</td>
+                    <td className="num">$9,000,000</td>
+                    <td className="num">$9,000,000</td>
+                    <td className="num">$9,000,000</td>
+                    <td className="num">$9,000,000</td>
+                    <td className="intel-addcol">{idx === 0 ? '+' : ''}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span className="linkish">Series D Preferred</span>
-                    </td>
-                    <td className="num">$18,000,000</td>
-                    <td className="num">$26,400,000</td>
-                    <td className="num">12.4%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span className="linkish">Series C Preferred</span>
-                    </td>
-                    <td className="num">$4,680,000</td>
-                    <td className="num">$5,920,000</td>
-                    <td className="num">3.1%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span className="linkish">Common (secondary)</span>
-                    </td>
-                    <td className="num">$1,500,000</td>
-                    <td className="num">$2,240,000</td>
-                    <td className="num">0.8%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="sum-split-col">
-            <div className="sum-sec-head">At a Glance</div>
-            <div className="sum-card">
-              <div className="sum-card-h">Company snapshot</div>
-              <div className="sum-dl">
-                <div className="sum-dl-row">
-                  <span className="sum-dl-k">Sector</span>
-                  <span className="sum-dl-v">Technology</span>
-                </div>
-                <div className="sum-dl-row">
-                  <span className="sum-dl-k">Industry</span>
-                  <span className="sum-dl-v">Consumer electronics</span>
-                </div>
-                <div className="sum-dl-row">
-                  <span className="sum-dl-k">Headquarters</span>
-                  <span className="sum-dl-v">Cupertino, CA</span>
-                </div>
-                <div className="sum-dl-row">
-                  <span className="sum-dl-k">Initial investment</span>
-                  <span className="sum-dl-v">03/14/2019</span>
-                </div>
-                <div className="sum-dl-row">
-                  <span className="sum-dl-k">Lead partner</span>
-                  <span className="sum-dl-v">J. Morgan</span>
-                </div>
-                <div className="sum-dl-row">
-                  <span className="sum-dl-k">Status</span>
-                  <span className="sum-dl-v">Active · Late stage</span>
-                </div>
-              </div>
-            </div>
-          </div>
+                )
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

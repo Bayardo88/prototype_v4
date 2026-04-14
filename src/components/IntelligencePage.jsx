@@ -17,11 +17,11 @@ export function IntelligencePage() {
             <h1 className="intel-page-title">Intelligence</h1>
             <div className="intel-filters">
               <button type="button" className="intel-filter-pill">
-                {selectedFirm?.name ?? 'Firm'}
+                Filter by Firm
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="intel-filter-pill">
-                {selectedFund?.name ?? 'Fund'}
+                Filter by Fund
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
             </div>

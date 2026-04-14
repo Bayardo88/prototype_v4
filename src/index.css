@@ -843,6 +843,20 @@
     }
     .tm-iconbtn:hover { background: var(--neutral-200); }
     .tm-right { display: inline-flex; align-items: center; gap: 8px; }
+    .tm-tab {
+      height: 32px;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+      color: var(--neutral-500);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tm-tab:hover { background: var(--neutral-200); color: var(--neutral-700); }
     .tm-currency { display: inline-flex; align-items: center; }
     .tm-cur-usd {
       background: var(--neutral-white);
@@ -927,6 +941,17 @@
       font-weight: 700;
       color: var(--neutral-900);
     }
+
+    /* ── COMPANY: SUMMARY (Navigation-V4 176:20239) ── */
+    .company-summary {
+      background: var(--neutral-white);
+      padding: 0;
+      border: 1px solid var(--neutral-200);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .company-summary-scroll { overflow: auto; }
+    .company-summary-table { min-width: 1180px; }
 
     /* ── PRODUCT PAGES (Waterfalls / Valuations / Documents / Reports) ── */
     .prod-page { background: var(--neutral-100); padding: 0; min-height: calc(100vh - var(--primary-h)); }
@@ -1123,6 +1148,17 @@
     .prod-table tbody tr:nth-child(even) td { background: #fbfcfe; }
     .prod-table td.addcol, .prod-table th.addcol { width: 92px; text-align: center; }
     .prod-table .linkish { color: var(--brand-700); font-weight: 600; cursor: pointer; }
+    /* Make interactive company links match Figma (no button chrome) */
+    .prod-table button.linkish {
+      border: none;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+    .prod-table button.linkish:hover { text-decoration: underline; }
     .prod-table .chk { width: 36px; text-align: center; }
     .prod-table input[type="checkbox"] { width: 12px; height: 12px; }
     .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }

@@ -45,11 +45,11 @@ export function ReportsPage() {
             <h1 className="prod-title">Reports</h1>
             <div className="prod-filters">
               <button type="button" className="prod-filter-pill">
-                {selectedFirm?.name ?? 'Firm'}
+                Filter by Firm
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                {selectedFund?.name ?? 'Fund'}
+                Filter by Fund
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
