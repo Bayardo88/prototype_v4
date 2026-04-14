@@ -7,11 +7,13 @@ import { WaterfallsPage } from './components/WaterfallsPage.jsx';
 import { ValuationsPage } from './components/ValuationsPage.jsx';
 import { DocumentsPage } from './components/DocumentsPage.jsx';
 import { ReportsPage } from './components/ReportsPage.jsx';
+import { CompaniesPage } from './components/CompaniesPage.jsx';
+import { CompanyWorkspace } from './components/CompanyWorkspace.jsx';
 import { AppDataProvider } from './lib/appData.js';
 import { UiStateProvider } from './lib/uiState.jsx';
 
-function renderProductPage(product) {
-  if (product === 'valuations') return <ValuationsPage />;
+function renderProductPage(product, { onOpenCompany }) {
+  if (product === 'valuations') return <ValuationsPage onOpenCompany={onOpenCompany} />;
   if (product === 'waterfalls') return <WaterfallsPage />;
   if (product === 'documents') return <DocumentsPage />;
   if (product === 'reports') return <ReportsPage />;
@@ -21,10 +23,11 @@ function renderProductPage(product) {
 export default function App() {
   const [shell, setShell] = useState('home');
   const [product, setProduct] = useState('intelligence');
+  const [companyRoute, setCompanyRoute] = useState('product'); // product | companies | company
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [product, shell]);
+  }, [product, shell, companyRoute]);
 
   return (
     <UiStateProvider>
@@ -37,12 +40,22 @@ export default function App() {
               onLogoClick={() => setShell('home')}
               onProductNavigate={(productId) => {
                 setShell('company');
+                setCompanyRoute('product');
                 setProduct(productId ?? 'intelligence');
+              }}
+              onCompaniesSeeAll={() => {
+                setShell('company');
+                setCompanyRoute('companies');
+              }}
+              onCompaniesSelect={() => {
+                setShell('company');
+                setCompanyRoute('company');
               }}
             />
             <HomePage
               onOpenPinned={(productId) => {
                 setShell('company');
+                setCompanyRoute('product');
                 setProduct(productId ?? 'intelligence');
               }}
             />
@@ -54,10 +67,19 @@ export default function App() {
               activeProduct={product}
               onLogoClick={() => setShell('home')}
               onProductNavigate={(productId) => {
+                setCompanyRoute('product');
                 setProduct(productId ?? 'intelligence');
               }}
+              onCompaniesSeeAll={() => setCompanyRoute('companies')}
+              onCompaniesSelect={() => setCompanyRoute('company')}
             />
-            {renderProductPage(product)}
+            {companyRoute === 'companies' ? (
+              <CompaniesPage onOpenCompany={() => setCompanyRoute('company')} />
+            ) : companyRoute === 'company' ? (
+              <CompanyWorkspace />
+            ) : (
+              renderProductPage(product, { onOpenCompany: () => setCompanyRoute('company') })
+            )}
             <BottomBar />
           </div>
         )}

@@ -3,8 +3,8 @@ import { useAppData } from '../lib/appData.js';
 import { useState } from 'react';
 import { useUiState } from '../lib/uiState.jsx';
 
-export function ValuationsPage() {
-  const { selectedFirm, selectedFund, companies } = useAppData();
+export function ValuationsPage({ onOpenCompany }) {
+  const { selectedFirm, selectedFund, companies, setSelectedCompanyId } = useAppData();
   const [bulkMode, setBulkMode] = useState(false);
   const { pinTab } = useUiState();
 
@@ -94,14 +94,25 @@ export function ValuationsPage() {
               </thead>
               <tbody>
                 {(companies.length ? companies.slice(0, 28) : Array.from({ length: 28 }).map((_, i) => ({ id: i, name: '6.4.3 regression' }))).map(
-                  (c, idx) => (
+                  (c) => (
                   <tr key={c.id}>
                     {bulkMode && (
                       <td className="chk">
                         <input type="checkbox" aria-label="Select row" />
                       </td>
                     )}
-                    <td className="linkish">{c.name}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="linkish"
+                        onClick={() => {
+                          setSelectedCompanyId(c.id);
+                          onOpenCompany?.(c.id);
+                        }}
+                      >
+                        {c.name}
+                      </button>
+                    </td>
                     <td>11/12/2026</td>
                     <td>
                       <span className="tag tag--green">Published</span>

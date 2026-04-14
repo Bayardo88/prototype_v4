@@ -10,7 +10,7 @@ const SECONDARY_TABS = [
 ];
 
 export function CompanyBar({ activeSecondary, onSecondaryChange }) {
-  const { selectedFund } = useAppData();
+  const { selectedFund, selectedCompany } = useAppData();
   function onKeyDown(e, id) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -25,7 +25,7 @@ export function CompanyBar({ activeSecondary, onSecondaryChange }) {
       data-secondary={activeSecondary}
     >
       <div className="cb-left">
-        <span className="company-name">Apple Inc.</span>
+        <span className="company-name">{selectedCompany?.name ?? 'Company'}</span>
         <div className="fund-filter">
           <span className="fund-filter-text">{selectedFund?.name ?? 'Fund'}</span>
           <MaterialIcon name="expand_more" size={14} color="var(--neutral-700)" />

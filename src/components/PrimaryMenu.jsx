@@ -1,4 +1,6 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useEffect, useRef, useState } from 'react';
+import { CompaniesDropdown } from './CompaniesDropdown.jsx';
 
 const LOGO_URL = 'https://placehold.co/34x32/01294C/9ACBF6?text=·';
 const AVATAR_URL = 'https://placehold.co/32x32/E2E8F0/475569?text=·';
@@ -16,8 +18,12 @@ export function PrimaryMenu({
   activeProduct = 'intelligence',
   onLogoClick,
   onProductNavigate,
+  onCompaniesSeeAll,
+  onCompaniesSelect,
 }) {
   const hideContext = variant === 'home';
+  const [companiesOpen, setCompaniesOpen] = useState(false);
+  const companiesWrapRef = useRef(null);
 
   function onNavKeyDown(e, id) {
     if (!onProductNavigate) return;
@@ -26,6 +32,25 @@ export function PrimaryMenu({
       onProductNavigate(id);
     }
   }
+
+  useEffect(() => {
+    function onDocDown(e) {
+      if (!companiesOpen) return;
+      const wrap = companiesWrapRef.current;
+      if (!wrap) return;
+      if (!wrap.contains(e.target)) setCompaniesOpen(false);
+    }
+    function onKey(e) {
+      if (!companiesOpen) return;
+      if (e.key === 'Escape') setCompaniesOpen(false);
+    }
+    document.addEventListener('mousedown', onDocDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [companiesOpen]);
 
   return (
     <header className="primary-menu" role="banner">
@@ -49,10 +74,33 @@ export function PrimaryMenu({
         </nav>
         {!hideContext && (
           <div className="pm-pills">
-            <div className="nav-pill" data-dropdown="false">
-              <MaterialIcon name="domain" size={16} className="nav-pill-icon" color="var(--neutral-100)" />
-              <span className="nav-pill-label nav-pill-label--companies">Companies</span>
-              <MaterialIcon name="expand_more" size={16} className="nav-pill-icon" color="var(--neutral-100)" />
+            <div className="nav-pill-wrap" ref={companiesWrapRef}>
+              <button
+                type="button"
+                className="nav-pill"
+                data-dropdown="false"
+                aria-haspopup="menu"
+                aria-expanded={companiesOpen}
+                onClick={() => setCompaniesOpen((v) => !v)}
+              >
+                <MaterialIcon name="domain" size={16} className="nav-pill-icon" color="var(--neutral-100)" />
+                <span className="nav-pill-label nav-pill-label--companies">Companies</span>
+                <MaterialIcon
+                  name="expand_more"
+                  size={16}
+                  className="nav-pill-icon"
+                  color="var(--neutral-100)"
+                />
+              </button>
+              {companiesOpen && (
+                <div className="nav-pill-popover" role="presentation">
+                  <CompaniesDropdown
+                    onClose={() => setCompaniesOpen(false)}
+                    onSeeAllCompanies={onCompaniesSeeAll}
+                    onSelectCompany={onCompaniesSelect}
+                  />
+                </div>
+              )}
             </div>
             <div className="nav-pill" data-dropdown="true" data-picker-label="true">
               <MaterialIcon name="calendar_today" size={16} className="nav-pill-icon" color="var(--brand-200)" />

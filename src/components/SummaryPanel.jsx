@@ -1,4 +1,7 @@
+import { useAppData } from '../lib/appData.js';
+
 export function SummaryPanel() {
+  const { selectedCompany } = useAppData();
   return (
     <div
       className="sec-panel"
@@ -8,7 +11,7 @@ export function SummaryPanel() {
     >
       <div className="content summary-page">
         <h1 className="sum-page-title">Summary</h1>
-        <p className="sum-page-sub">Apple Inc. · Measurement date 01/17/2024 · Draft</p>
+        <p className="sum-page-sub">{selectedCompany?.name ?? 'Company'} · Measurement date 01/17/2024 · Draft</p>
         <div className="sum-sec-head">Company Overview</div>
         <div className="sum-kpi-grid">
           <div className="sum-kpi">
