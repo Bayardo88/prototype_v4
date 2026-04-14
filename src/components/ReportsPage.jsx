@@ -1,4 +1,5 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 
 function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
   const icon =
@@ -25,12 +26,11 @@ function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
 }
 
 export function ReportsPage() {
-  const items = [
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'xlsx', name: 'Doc_Name.xlsx' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'xlsx', name: 'Doc_Name.xlsx' },
-  ];
+  const { data: reports } = useSupabaseTable('reports', {
+    select: 'id,name',
+    orderBy: 'name',
+    limit: 150,
+  });
 
   return (
     <div className="sec-panel" id="sec-panel-reports" role="tabpanel">
@@ -69,10 +69,13 @@ export function ReportsPage() {
         </header>
 
         <div className="docs-grid" aria-label="Reports grid">
-          {Array.from({ length: 48 }).map((_, idx) => {
-            const seed = items[idx % items.length];
-            return <ReportCard key={idx} kind={seed.kind} name={seed.name} />;
-          })}
+          {(reports.length ? reports : Array.from({ length: 48 }).map((_, i) => ({ id: i, name: 'Doc_Name.pdf' })))
+            .slice(0, 48)
+            .map((r, idx) => {
+              const kind = idx % 6 === 0 ? 'xlsx' : 'pdf';
+              const name = r.name.includes('.') ? r.name : `${r.name}.${kind === 'xlsx' ? 'xlsx' : 'pdf'}`;
+              return <ReportCard key={r.id} kind={kind} name={name} />;
+            })}
         </div>
       </div>
     </div>

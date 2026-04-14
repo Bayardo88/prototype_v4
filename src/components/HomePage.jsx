@@ -1,9 +1,22 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 
 /**
  * Homepage dashboard — matches `Homepage_-_Full_Dashboard` screenshot.
  */
 export function HomePage() {
+  const { data: firms } = useSupabaseTable('firms', { select: 'id,name,firm_value,firm_value_delta', orderBy: 'name', limit: 1 });
+  const { data: funds } = useSupabaseTable('funds', { select: 'id,name', orderBy: 'name', limit: 8 });
+
+  const firm = firms[0];
+  const easy = funds.slice(0, 5);
+  const metricFunds = funds.slice(0, 4);
+
+  function formatMoney(n) {
+    if (typeof n !== 'number') return n ?? '';
+    return n.toLocaleString('en-US');
+  }
+
   return (
     <main className="home-page" id="home-page-root" aria-label="Home">
       <div className="home-tabs">
@@ -24,13 +37,17 @@ export function HomePage() {
             <div className="home-firm-head">
               <div className="home-firm-k">Firm Value</div>
               <div className="home-firm-meta">
-                <span className="home-firm-delta">+7.45%</span>
+                <span className="home-firm-delta">
+                  +{typeof firm?.firm_value_delta === 'number' ? firm.firm_value_delta.toFixed(2) : '7.45'}%
+                </span>
                 <button type="button" className="home-kebab" aria-label="More">
                   <MaterialIcon name="more_vert" size={18} color="var(--neutral-500)" />
                 </button>
               </div>
             </div>
-            <div className="home-firm-v">$18,092,124</div>
+            <div className="home-firm-v">
+              ${typeof firm?.firm_value === 'number' ? formatMoney(firm.firm_value) : '18,092,124'}
+            </div>
             <div className="home-spark" aria-hidden="true" />
           </div>
         </div>
@@ -39,21 +56,24 @@ export function HomePage() {
           <div className="home-easy">
             <div className="home-easy-title">Easy Access to Scalar’s Features</div>
             <div className="home-easy-grid" aria-hidden="true">
-              <div className="home-easy-tile">Fund Name Value</div>
-              <div className="home-easy-tile">Fund Name Value</div>
-              <div className="home-easy-tile">Fund Name Value</div>
-              <div className="home-easy-tile">Fund Name Value</div>
-              <div className="home-easy-tile">Fund Name Value</div>
+              {(easy.length ? easy : Array.from({ length: 5 }).map((_, i) => ({ id: i, name: 'Fund Name Value' }))).map(
+                (f) => (
+                  <div key={f.id} className="home-easy-tile">
+                    {f.name}
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>
 
         <div className="home-metrics">
-          {Array.from({ length: 4 }).map((_, idx) => (
+          {(metricFunds.length ? metricFunds : Array.from({ length: 4 }).map((_, i) => ({ id: i, name: 'Fund Name Value' }))).map(
+            (f, idx) => (
             <div key={idx} className="home-metric">
               <div className="home-metric-ico" aria-hidden="true" />
               <div className="home-metric-body">
-                <div className="home-metric-label">Fund Name Value</div>
+                <div className="home-metric-label">{f.name}</div>
                 <div className="home-metric-value">$2,350,404</div>
               </div>
             </div>

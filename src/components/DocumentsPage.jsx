@@ -1,4 +1,5 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 
 function DocIcon({ kind }) {
   if (kind === 'xlsx') return <MaterialIcon name="grid_on" size={16} color="#16a34a" />;
@@ -27,18 +28,11 @@ function DocCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
 }
 
 export function DocumentsPage() {
-  const docs = [
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'xlsx', name: 'Doc_Name.xlsx' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'doc', name: 'Doc_Name.wrd' },
-    { kind: 'pdf', name: 'Doc_Name.pdf' },
-    { kind: 'ppt', name: 'Doc_Name.pdf' },
-  ];
+  const { data: documents } = useSupabaseTable('documents', {
+    select: 'id,name',
+    orderBy: 'name',
+    limit: 150,
+  });
 
   return (
     <div className="sec-panel" id="sec-panel-documents" role="tabpanel">
@@ -80,10 +74,13 @@ export function DocumentsPage() {
         </header>
 
         <div className="docs-grid" aria-label="Documents grid">
-          {Array.from({ length: 48 }).map((_, idx) => {
-            const seed = docs[idx % docs.length];
-            return <DocCard key={idx} kind={seed.kind} name={seed.name} />;
-          })}
+          {(documents.length ? documents : Array.from({ length: 48 }).map((_, i) => ({ id: i, name: 'Doc_Name.pdf' })))
+            .slice(0, 48)
+            .map((d, idx) => {
+              const kind = idx % 10 === 5 ? 'xlsx' : 'pdf';
+              const name = d.name.includes('.') ? d.name : `${d.name}.pdf`;
+              return <DocCard key={d.id} kind={kind} name={name} />;
+            })}
         </div>
       </div>
     </div>

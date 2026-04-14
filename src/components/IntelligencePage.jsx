@@ -1,10 +1,15 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 
 /**
  * Intelligence — Figma Navigation-V4, node 111-18243 (Dev Mode).
  * This is the default company workspace landing for the Intelligence product area.
  */
 export function IntelligencePage() {
+  const { data: firms } = useSupabaseTable('firms', { select: 'id,name', orderBy: 'name', limit: 150 });
+  const { data: funds } = useSupabaseTable('funds', { select: 'id,name', orderBy: 'name', limit: 150 });
+  const { data: companies } = useSupabaseTable('companies', { select: 'id,name', orderBy: 'name', limit: 150 });
+
   return (
     <div className="sec-panel" id="sec-panel-intelligence" role="tabpanel">
       <div className="content intel-page">
@@ -50,11 +55,11 @@ export function IntelligencePage() {
         </section>
 
         <section className="intel-metrics-row" aria-label="Fund metrics">
-          {Array.from({ length: 5 }).map((_, idx) => (
+          {(funds.length ? funds.slice(0, 5) : Array.from({ length: 5 }).map((_, i) => ({ id: i, name: 'Fund Name Value' }))).map((f, idx) => (
             <div key={idx} className="intel-metric-card">
               <div className="intel-metric-ico" aria-hidden="true" />
               <div className="intel-metric-body">
-                <div className="intel-metric-label">Fund Name Value</div>
+                <div className="intel-metric-label">{f.name}</div>
                 <div className="intel-metric-value">$2,350,404</div>
               </div>
             </div>
@@ -110,32 +115,26 @@ export function IntelligencePage() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ['6.4.3 regression', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '30.0%', '$9,000,000'],
-                  ['ARAMCO Company', 'Fund XIII', '11/3/2025', '11/3/2025', '11/3/2025', '3.8%', '$17,000,000'],
-                  ['Airbus SAS', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '0.8%', '$2'],
-                  ['Autopopulate Volatility Company', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '24.6%', '$85,000,000'],
-                  ['Backsolve Calculation', 'Property and Stakes 1', '11/3/2025', '11/3/2025', '11/3/2025', '13.0%', '$14,500,000'],
-                  ['Berkshire Hathaway', 'Property and Stakes 1', '11/3/2025', '11/3/2025', '11/3/2025', '32.3%', '$54,000,000'],
-                  ['Blackstone, Inc.', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '21.5%', '$95,000,000'],
-                ].map((r) => (
-                  <tr key={r[0]}>
-                    <td className="intel-first">{r[0]}</td>
-                    <td>{r[1]}</td>
-                    <td>{r[2]}</td>
-                    <td>{r[3]}</td>
-                    <td>{r[4]}</td>
-                    <td>{r[5]}</td>
-                    <td className="num">{r[6]}</td>
-                    <td className="num">{r[6]}</td>
-                    <td className="num">{r[6]}</td>
-                    <td className="num">{r[6]}</td>
-                    <td className="num">{r[6]}</td>
-                    <td className="intel-addcol">
-                      <MaterialIcon name="add" size={16} color="var(--neutral-500)" />
-                    </td>
-                  </tr>
-                ))}
+                {(companies.length ? companies.slice(0, 24) : Array.from({ length: 24 }).map((_, i) => ({ id: i, name: 'Company' }))).map(
+                  (c, idx) => (
+                    <tr key={c.id}>
+                      <td className="intel-first">{c.name}</td>
+                      <td>{funds[idx % (funds.length || 1)]?.name ?? 'All Funds'}</td>
+                      <td>11/3/2025</td>
+                      <td>11/3/2025</td>
+                      <td>11/3/2025</td>
+                      <td>{((idx % 40) + 0.8).toFixed(1)}%</td>
+                      <td className="num">$9,000,000</td>
+                      <td className="num">$9,000,000</td>
+                      <td className="num">$9,000,000</td>
+                      <td className="num">$9,000,000</td>
+                      <td className="num">$9,000,000</td>
+                      <td className="intel-addcol">
+                        <MaterialIcon name="add" size={16} color="var(--neutral-500)" />
+                      </td>
+                    </tr>
+                  )
+                )}
                 <tr className="intel-total">
                   <td className="intel-first">Total</td>
                   <td />

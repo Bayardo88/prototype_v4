@@ -1,6 +1,13 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 
 export function WaterfallsPage() {
+  const { data: companies } = useSupabaseTable('companies', {
+    select: 'id,name',
+    orderBy: 'name',
+    limit: 150,
+  });
+
   return (
     <div className="sec-panel" id="sec-panel-waterfalls" role="tabpanel">
       <div className="content prod-page">
@@ -82,21 +89,15 @@ export function WaterfallsPage() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ['6.4.3 regression', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '30.0%'],
-                  ['ARAMCO Company', 'Fund XIII', '11/3/2025', '11/3/2025', '11/3/2025', '3.8%'],
-                  ['Airbus SAS', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '0.8%'],
-                  ['Autopopulate Volatility Company', 'Berkshire Hathaway', '11/3/2025', '11/3/2025', '11/3/2025', '24.6%'],
-                  ['Backsolve Calculation', 'Property and Stakes 1', '11/3/2025', '11/3/2025', '11/3/2025', '13.0%'],
-                  ['Berkshire Hathaway', 'Property and Stakes 1', '11/3/2025', '11/3/2025', '11/3/2025', '32.3%'],
-                ].map((r) => (
-                  <tr key={r[0]}>
-                    <td className="linkish">{r[0]}</td>
-                    <td>{r[1]}</td>
-                    <td>{r[2]}</td>
-                    <td>{r[3]}</td>
-                    <td>{r[4]}</td>
-                    <td>{r[5]}</td>
+                {(companies.length ? companies.slice(0, 18) : Array.from({ length: 18 }).map((_, i) => ({ id: i, name: 'Company' }))).map(
+                  (c, idx) => (
+                  <tr key={c.id}>
+                    <td className="linkish">{c.name}</td>
+                    <td>Fund XIII</td>
+                    <td>11/3/2025</td>
+                    <td>11/3/2025</td>
+                    <td>1.23x</td>
+                    <td>{(idx % 33) + 0.8}%</td>
                     <td className="addcol">
                       <MaterialIcon name="add" size={16} color="var(--neutral-500)" />
                     </td>

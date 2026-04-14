@@ -1,6 +1,13 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 
 export function ValuationsPage() {
+  const { data: companies } = useSupabaseTable('companies', {
+    select: 'id,name',
+    orderBy: 'name',
+    limit: 150,
+  });
+
   return (
     <div className="sec-panel" id="sec-panel-valuations" role="tabpanel">
       <div className="content prod-page">
@@ -76,12 +83,13 @@ export function ValuationsPage() {
                 </tr>
               </thead>
               <tbody>
-                {Array.from({ length: 28 }).map((_, idx) => (
-                  <tr key={idx}>
+                {(companies.length ? companies.slice(0, 28) : Array.from({ length: 28 }).map((_, i) => ({ id: i, name: '6.4.3 regression' }))).map(
+                  (c, idx) => (
+                  <tr key={c.id}>
                     <td className="chk">
                       <input type="checkbox" aria-label="Select row" />
                     </td>
-                    <td className="linkish">6.4.3 regression</td>
+                    <td className="linkish">{c.name}</td>
                     <td>11/12/2026</td>
                     <td>
                       <span className="tag tag--green">Published</span>
