@@ -229,11 +229,8 @@
       box-sizing: border-box;
     }
     .company-dd-search-icon {
-      width: 16px;
-      height: 16px;
-      display: block;
       flex-shrink: 0;
-      opacity: 0.85;
+      opacity: 0.92;
     }
     .company-dd-search-input {
       width: 100%;
@@ -291,11 +288,8 @@
       white-space: nowrap;
     }
     .company-dd-chevron {
-      width: 16px;
-      height: 16px;
-      display: block;
       flex-shrink: 0;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
     /* Company row hover → sections flyout (Scalar DS 517:6170) + Cap nested (405:1023) */
@@ -368,11 +362,8 @@
       white-space: nowrap;
     }
     .company-dd-flyout-chevron {
-      width: 16px;
-      height: 16px;
-      display: block;
       flex-shrink: 0;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
     .company-dd-add {
@@ -387,6 +378,12 @@
       gap: 4px;
       cursor: pointer;
       height: 28px;
+    }
+    .company-dd-add-icon {
+      flex-shrink: 0;
+    }
+    .company-dd-add:hover {
+      background: rgba(3, 125, 232, 0.06);
     }
     .company-dd-add-text {
       font-size: 12px;
@@ -937,7 +934,7 @@
       background: var(--neutral-white);
       border: 1px solid var(--neutral-200);
       border-radius: 8px;
-      overflow: hidden;
+      overflow: visible;
     }
     /* Intelligence toolbar updated to match Figma node 933:24526 */
     .tm-bar {
@@ -1467,6 +1464,19 @@
       border-radius: 4px; cursor: pointer;
     }
     .tm-right { display: flex; align-items: center; gap: 8px; }
+    /* Intelligence tm-bar: AI trigger popover (Scalar DS 466:3115 AI-input-field) */
+    .intel-ai-popover-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .intel-ai-toolbar-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 40;
+      filter: drop-shadow(0 10px 20px rgba(2, 8, 23, 0.14));
+    }
     .ai-btn {
       background: var(--color-ai); border-radius: 4px;
       padding: 4px;

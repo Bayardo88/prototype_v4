@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
 import { useUiState } from '../lib/uiState.jsx';
 
@@ -12,13 +13,13 @@ import { useUiState } from '../lib/uiState.jsx';
  * Cap Table nested submenu (on selecting “Cap Table” in that flyout):
  * Figma node 405:1023 — https://www.figma.com/design/Z4MtKOfkNEzhMYJzN1q3kR/Scalar_Design_System-Components?node-id=405-1023
  *
- * Remote icon URLs expire ~7 days; replace with checked-in assets later.
+ * Icons: Material Symbols (same stack as PrimaryMenu) for sharp rendering and no remote asset expiry.
  */
-const SEARCH_ICON_IMG = 'https://www.figma.com/api/mcp/asset/9091958d-0962-4be3-a443-01d25891a9fe';
-const CHEVRON_RIGHT_IMG = 'https://www.figma.com/api/mcp/asset/304395bc-b56e-488d-b2b6-5ecd265b4b6b';
-const ADD_ICON_IMG = 'https://www.figma.com/api/mcp/asset/3982a25c-c7e9-4e12-a8e1-25880ccdd3bd';
-/** Chevron glyph for nested items (Figma 517:6170) */
-const SUBMENU_CHEVRON_IMG = 'https://www.figma.com/api/mcp/asset/4599d9d4-833e-4998-9735-149ee8c1c848';
+const ICON = {
+  search: { name: 'search', size: 16, color: 'var(--neutral-600)', weight: 400 },
+  chevron: { name: 'chevron_right', size: 16, color: 'var(--neutral-500)', weight: 500 },
+  add: { name: 'add', size: 16, color: 'var(--brand-500)', weight: 500 },
+};
 
 const COMPANY_SECTION_FLYOUT = [
   { id: 'summary', label: 'Summary', chevron: false },
@@ -116,7 +117,13 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
   return (
     <div className="company-dd" role="menu" aria-label="Companies">
       <div className="company-dd-search" role="search">
-        <img className="company-dd-search-icon" src={SEARCH_ICON_IMG} alt="" aria-hidden="true" />
+        <MaterialIcon
+          className="company-dd-search-icon"
+          name={ICON.search.name}
+          size={ICON.search.size}
+          color={ICON.search.color}
+          weight={ICON.search.weight}
+        />
         <input
           className="company-dd-search-input"
           value={q}
@@ -173,7 +180,13 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
               >
                 <span className="company-dd-text">{c.name}</span>
                 {!isPlaceholder && (
-                  <img className="company-dd-chevron" src={CHEVRON_RIGHT_IMG} alt="" aria-hidden="true" />
+                  <MaterialIcon
+                    className="company-dd-chevron"
+                    name={ICON.chevron.name}
+                    size={ICON.chevron.size}
+                    color={ICON.chevron.color}
+                    weight={ICON.chevron.weight}
+                  />
                 )}
               </button>
 
@@ -209,11 +222,12 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
                         >
                           <span className="company-dd-flyout-text">{row.label}</span>
                           {row.chevron && (
-                            <img
+                            <MaterialIcon
                               className="company-dd-flyout-chevron"
-                              src={SUBMENU_CHEVRON_IMG}
-                              alt=""
-                              aria-hidden="true"
+                              name={ICON.chevron.name}
+                              size={ICON.chevron.size}
+                              color={ICON.chevron.color}
+                              weight={ICON.chevron.weight}
                             />
                           )}
                         </button>
@@ -256,7 +270,13 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
       </div>
 
       <button type="button" className="company-dd-add" onClick={onClose}>
-        <img src={ADD_ICON_IMG} alt="" aria-hidden="true" width={16} height={16} />
+        <MaterialIcon
+          className="company-dd-add-icon"
+          name={ICON.add.name}
+          size={ICON.add.size}
+          color={ICON.add.color}
+          weight={ICON.add.weight}
+        />
         <span className="company-dd-add-text">Add New Company</span>
       </button>
     </div>

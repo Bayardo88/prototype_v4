@@ -1,13 +1,41 @@
+import { useEffect, useRef, useState } from 'react';
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
 
 /**
  * Intelligence — Figma Navigation-V4, node 111-18243 (Dev Mode).
  * This is the default company workspace landing for the Intelligence product area.
+ *
+ * Table toolbar AI popover: Scalar DS AiTool AI-input-field — node 466:3115
+ * https://www.figma.com/design/Z4MtKOfkNEzhMYJzN1q3kR/Scalar_Design_System-Components?node-id=466-3115
  */
 export function IntelligencePage() {
   const { selectedFirm, selectedFund, selectedCompany, funds, companies } = useAppData();
   const selectedFundName = selectedFund?.name ?? 'All Funds';
+  const [aiToolbarOpen, setAiToolbarOpen] = useState(false);
+  const aiPopoverWrapRef = useRef(null);
+  const aiToolbarInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!aiToolbarOpen) return;
+    function onDocMouseDown(e) {
+      const el = aiPopoverWrapRef.current;
+      if (el && !el.contains(e.target)) setAiToolbarOpen(false);
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') setAiToolbarOpen(false);
+    }
+    document.addEventListener('mousedown', onDocMouseDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocMouseDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [aiToolbarOpen]);
+
+  useEffect(() => {
+    if (aiToolbarOpen) aiToolbarInputRef.current?.focus();
+  }, [aiToolbarOpen]);
 
   return (
     <div className="sec-panel" id="sec-panel-intelligence" role="tabpanel">
@@ -77,15 +105,53 @@ export function IntelligencePage() {
               </button>
             </div>
             <div className="tm-right">
-              {/* AI trigger already standardized to design system button styles */}
-              <button className="ai-btn" type="button" aria-label="AI">
-                <img
-                  className="ai-btn-icon"
-                  src="https://www.figma.com/api/mcp/asset/06b36e9e-8896-4db1-9b28-4ae63dedb08e"
-                  alt=""
-                  aria-hidden="true"
-                />
-              </button>
+              <div className="intel-ai-popover-wrap" ref={aiPopoverWrapRef}>
+                <button
+                  className="ai-btn"
+                  type="button"
+                  aria-label="AI"
+                  aria-haspopup="dialog"
+                  aria-expanded={aiToolbarOpen}
+                  aria-controls="intel-ai-toolbar-popover"
+                  onClick={() => setAiToolbarOpen((v) => !v)}
+                >
+                  <MaterialIcon name="auto_awesome" size={16} fill={1} color="var(--neutral-white)" />
+                </button>
+                {aiToolbarOpen && (
+                  <div
+                    className="intel-ai-toolbar-popover"
+                    id="intel-ai-toolbar-popover"
+                    role="dialog"
+                    aria-label="AI assistant"
+                  >
+                    <div
+                      className="ai-input"
+                      role="search"
+                      aria-label="AI prompt"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Escape') {
+                          e.stopPropagation();
+                          setAiToolbarOpen(false);
+                        }
+                      }}
+                    >
+                      <span className="ai-input-icon" aria-hidden="true">
+                        <MaterialIcon name="auto_awesome" size={16} fill={1} color="var(--color-ai)" />
+                      </span>
+                      <input
+                        ref={aiToolbarInputRef}
+                        className="ai-input-text"
+                        type="text"
+                        placeholder="How can I help you?"
+                        aria-label="Ask AI"
+                      />
+                      <span className="ai-input-chip" aria-hidden="true">
+                        <span className="ai-input-chip-text">Hit Return</span>
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               <div className="tm-currency" aria-label="Currency">
                 <div className="tm-cur-usd">USD</div>
