@@ -15,6 +15,7 @@ const CHEVRON_RIGHT_IMG = 'https://www.figma.com/api/mcp/asset/067a2848-8355-473
 export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany }) {
   const { companies, selectedFirm, selectedFund, setSelectedCompanyId } = useAppData();
   const [q, setQ] = useState('');
+  const MIN_ITEMS = 8;
 
   const items = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -24,8 +25,8 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
       if (selectedFund && c.fund_id !== selectedFund.id) return false;
       return true;
     });
-    if (!query) return base.slice(0, 6);
-    return base.filter((c) => c.name.toLowerCase().includes(query)).slice(0, 6);
+    if (!query) return base.slice(0, MIN_ITEMS);
+    return base.filter((c) => c.name.toLowerCase().includes(query)).slice(0, MIN_ITEMS);
   }, [companies, q, selectedFirm?.id, selectedFund?.id]);
 
   return (
