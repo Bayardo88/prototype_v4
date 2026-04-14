@@ -9,8 +9,9 @@ import { useAppData } from '../lib/appData.js';
  * Uses Figma-hosted chevron/search asset URLs (expire ~7 days).
  * Replace with checked-in assets later.
  */
-const SEARCH_ICON_IMG = 'https://www.figma.com/api/mcp/asset/90457e77-f358-49d2-82cd-cd9b80f44682';
-const CHEVRON_RIGHT_IMG = 'https://www.figma.com/api/mcp/asset/067a2848-8355-4736-984c-10e42b88c14a';
+const SEARCH_ICON_IMG = 'https://www.figma.com/api/mcp/asset/9091958d-0962-4be3-a443-01d25891a9fe';
+const CHEVRON_RIGHT_IMG = 'https://www.figma.com/api/mcp/asset/304395bc-b56e-488d-b2b6-5ecd265b4b6b';
+const ADD_ICON_IMG = 'https://www.figma.com/api/mcp/asset/3982a25c-c7e9-4e12-a8e1-25880ccdd3bd';
 
 export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany }) {
   const { companies, selectedFirm, selectedFund, setSelectedCompanyId } = useAppData();
@@ -96,7 +97,7 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
       </div>
 
       <button type="button" className="company-dd-add" onClick={onClose}>
-        <MaterialIcon name="add" size={16} color="var(--brand-500)" />
+        <img src={ADD_ICON_IMG} alt="" aria-hidden="true" width={16} height={16} />
         <span className="company-dd-add-text">Add New Company</span>
       </button>
     </div>

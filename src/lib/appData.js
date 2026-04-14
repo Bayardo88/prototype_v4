@@ -1,22 +1,22 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import { useSupabaseTable } from './useSupabaseTable.js';
+import { useTableData } from './useTableData.js';
 
 const AppDataContext = createContext(null);
 
 export function AppDataProvider({ children }) {
-  const { data: firms, loading: firmsLoading, error: firmsError } = useSupabaseTable('firms', {
+  const { data: firms, loading: firmsLoading, error: firmsError } = useTableData('firms', {
     select: 'id,name,firm_value,firm_value_delta',
     orderBy: 'name',
     limit: 150,
   });
 
-  const { data: funds, loading: fundsLoading, error: fundsError } = useSupabaseTable('funds', {
+  const { data: funds, loading: fundsLoading, error: fundsError } = useTableData('funds', {
     select: 'id,name,firm_id',
     orderBy: 'name',
     limit: 150,
   });
 
-  const { data: companies, loading: companiesLoading, error: companiesError } = useSupabaseTable(
+  const { data: companies, loading: companiesLoading, error: companiesError } = useTableData(
     'companies',
     {
       select: 'id,name,firm_id,fund_id',
