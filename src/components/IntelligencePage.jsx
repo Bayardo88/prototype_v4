@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
 
@@ -6,24 +6,88 @@ import { useAppData } from '../lib/appData.js';
  * Intelligence — Figma Navigation-V4, node 111-18243 (Dev Mode).
  * This is the default company workspace landing for the Intelligence product area.
  *
- * Table toolbar AI popover: Scalar DS AiTool AI-input-field — node 466:3115
+ * Table toolbar AI: trigger expands into inline AiTool AI-input-field — node 466:3115
  * https://www.figma.com/design/Z4MtKOfkNEzhMYJzN1q3kR/Scalar_Design_System-Components?node-id=466-3115
  */
+const FIRM_MENU_PAD = [
+  'Meridian Capital Group',
+  'Sterling Peak Partners',
+  'HarborLine Ventures',
+  'Cascade Equity Partners',
+  'Ironwood Holdings',
+];
+
+const FUND_MENU_PAD = [
+  'Meridian Growth Fund',
+  'Sterling Income Trust',
+  'HarborLine Credit II',
+  'Cascade Opportunity Fund',
+  'Ironwood Select LP',
+];
+
 export function IntelligencePage() {
-  const { selectedFirm, selectedFund, selectedCompany, funds, companies } = useAppData();
+  const { selectedFirm, selectedFund, firms, funds, companies, setSelectedFirmId, setSelectedFundId } = useAppData();
   const selectedFundName = selectedFund?.name ?? 'All Funds';
   const [aiToolbarOpen, setAiToolbarOpen] = useState(false);
+  const [firmFilterOpen, setFirmFilterOpen] = useState(false);
+  const [fundFilterOpen, setFundFilterOpen] = useState(false);
   const aiPopoverWrapRef = useRef(null);
+  const firmFilterWrapRef = useRef(null);
+  const fundFilterWrapRef = useRef(null);
   const aiToolbarInputRef = useRef(null);
 
+  const firmMenuItems = useMemo(() => {
+    const sorted = [...(firms ?? [])].sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    const pick = sorted.slice(0, 5);
+    if (pick.length >= 5) return pick;
+    const seen = new Set(pick.map((f) => f.name));
+    const out = [...pick];
+    for (const label of FIRM_MENU_PAD) {
+      if (out.length >= 5) break;
+      if (seen.has(label)) continue;
+      seen.add(label);
+      out.push({ id: `intel-firm-dd-${out.length}`, name: label, __placeholder: true });
+    }
+    return out;
+  }, [firms]);
+
+  const fundMenuItems = useMemo(() => {
+    const pool = selectedFirm
+      ? (funds ?? []).filter((fd) => fd.firm_id === selectedFirm.id)
+      : [...(funds ?? [])];
+    const sorted = [...pool].sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    const pick = sorted.slice(0, 5);
+    if (pick.length >= 5) return pick;
+    const seen = new Set(pick.map((f) => f.name));
+    const out = [...pick];
+    for (const label of FUND_MENU_PAD) {
+      if (out.length >= 5) break;
+      if (seen.has(label)) continue;
+      seen.add(label);
+      out.push({ id: `intel-fund-dd-${out.length}`, name: label, __placeholder: true });
+    }
+    return out;
+  }, [funds, selectedFirm?.id]);
+
   useEffect(() => {
-    if (!aiToolbarOpen) return;
+    if (!aiToolbarOpen && !firmFilterOpen && !fundFilterOpen) return;
     function onDocMouseDown(e) {
-      const el = aiPopoverWrapRef.current;
-      if (el && !el.contains(e.target)) setAiToolbarOpen(false);
+      if (aiToolbarOpen && aiPopoverWrapRef.current && !aiPopoverWrapRef.current.contains(e.target)) {
+        setAiToolbarOpen(false);
+      }
+      if (firmFilterOpen && firmFilterWrapRef.current && !firmFilterWrapRef.current.contains(e.target)) {
+        setFirmFilterOpen(false);
+      }
+      if (fundFilterOpen && fundFilterWrapRef.current && !fundFilterWrapRef.current.contains(e.target)) {
+        setFundFilterOpen(false);
+      }
     }
     function onKey(e) {
-      if (e.key === 'Escape') setAiToolbarOpen(false);
+      if (e.key === 'Escape') {
+        setAiToolbarOpen(false);
+        setFirmFilterOpen(false);
+        setFundFilterOpen(false);
+      }
     }
     document.addEventListener('mousedown', onDocMouseDown);
     document.addEventListener('keydown', onKey);
@@ -31,7 +95,7 @@ export function IntelligencePage() {
       document.removeEventListener('mousedown', onDocMouseDown);
       document.removeEventListener('keydown', onKey);
     };
-  }, [aiToolbarOpen]);
+  }, [aiToolbarOpen, firmFilterOpen, fundFilterOpen]);
 
   useEffect(() => {
     if (aiToolbarOpen) aiToolbarInputRef.current?.focus();
@@ -44,14 +108,76 @@ export function IntelligencePage() {
           <div className="intel-topbar-left">
             <h1 className="intel-page-title">Intelligence</h1>
             <div className="intel-filters">
-              <button type="button" className="intel-filter-pill">
-                Filter by Firm
-                <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
-              </button>
-              <button type="button" className="intel-filter-pill">
-                Filter by Fund
-                <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
-              </button>
+              <div className="intel-filter-wrap" ref={firmFilterWrapRef}>
+                <button
+                  type="button"
+                  className="intel-filter-pill"
+                  data-open={firmFilterOpen ? 'true' : 'false'}
+                  aria-haspopup="listbox"
+                  aria-expanded={firmFilterOpen}
+                  aria-controls="intel-firm-filter-list"
+                  onClick={() => setFirmFilterOpen((v) => !v)}
+                >
+                  <span className="intel-filter-pill-label">{selectedFirm?.name ?? 'Filter by Firm'}</span>
+                  <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
+                </button>
+                {firmFilterOpen && (
+                  <div className="intel-filter-dd" id="intel-firm-filter-list" role="listbox" aria-label="Firms">
+                    {firmMenuItems.map((f) => (
+                      <button
+                        key={f.id}
+                        type="button"
+                        role="option"
+                        aria-selected={selectedFirm?.id === f.id}
+                        disabled={!!f.__placeholder}
+                        className={`intel-filter-dd-item${selectedFirm?.id === f.id ? ' is-active' : ''}`}
+                        onClick={() => {
+                          if (f.__placeholder) return;
+                          setSelectedFirmId(f.id);
+                          setFirmFilterOpen(false);
+                        }}
+                      >
+                        {f.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="intel-filter-wrap" ref={fundFilterWrapRef}>
+                <button
+                  type="button"
+                  className="intel-filter-pill"
+                  data-open={fundFilterOpen ? 'true' : 'false'}
+                  aria-haspopup="listbox"
+                  aria-expanded={fundFilterOpen}
+                  aria-controls="intel-fund-filter-list"
+                  onClick={() => setFundFilterOpen((v) => !v)}
+                >
+                  <span className="intel-filter-pill-label">{selectedFund?.name ?? 'Filter by Fund'}</span>
+                  <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
+                </button>
+                {fundFilterOpen && (
+                  <div className="intel-filter-dd" id="intel-fund-filter-list" role="listbox" aria-label="Funds">
+                    {fundMenuItems.map((fd) => (
+                      <button
+                        key={fd.id}
+                        type="button"
+                        role="option"
+                        aria-selected={selectedFund?.id === fd.id}
+                        disabled={!!fd.__placeholder}
+                        className={`intel-filter-dd-item${selectedFund?.id === fd.id ? ' is-active' : ''}`}
+                        onClick={() => {
+                          if (fd.__placeholder) return;
+                          setSelectedFundId(fd.id);
+                          setFundFilterOpen(false);
+                        }}
+                      >
+                        {fd.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -105,50 +231,45 @@ export function IntelligencePage() {
               </button>
             </div>
             <div className="tm-right">
-              <div className="intel-ai-popover-wrap" ref={aiPopoverWrapRef}>
-                <button
-                  className="ai-btn"
-                  type="button"
-                  aria-label="AI"
-                  aria-haspopup="dialog"
-                  aria-expanded={aiToolbarOpen}
-                  aria-controls="intel-ai-toolbar-popover"
-                  onClick={() => setAiToolbarOpen((v) => !v)}
-                >
-                  <MaterialIcon name="auto_awesome" size={16} fill={1} color="var(--neutral-white)" />
-                </button>
-                {aiToolbarOpen && (
-                  <div
-                    className="intel-ai-toolbar-popover"
-                    id="intel-ai-toolbar-popover"
-                    role="dialog"
-                    aria-label="AI assistant"
+              <div className="intel-ai-toolbar-slot" ref={aiPopoverWrapRef}>
+                {!aiToolbarOpen ? (
+                  <button
+                    className="ai-btn"
+                    type="button"
+                    aria-label="Open AI assistant"
+                    aria-expanded="false"
+                    aria-controls="intel-ai-toolbar-query"
+                    onClick={() => setAiToolbarOpen(true)}
                   >
-                    <div
-                      className="ai-input"
-                      role="search"
-                      aria-label="AI prompt"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Escape') {
-                          e.stopPropagation();
-                          setAiToolbarOpen(false);
-                        }
-                      }}
-                    >
-                      <span className="ai-input-icon" aria-hidden="true">
-                        <MaterialIcon name="auto_awesome" size={16} fill={1} color="var(--color-ai)" />
-                      </span>
-                      <input
-                        ref={aiToolbarInputRef}
-                        className="ai-input-text"
-                        type="text"
-                        placeholder="How can I help you?"
-                        aria-label="Ask AI"
-                      />
-                      <span className="ai-input-chip" aria-hidden="true">
-                        <span className="ai-input-chip-text">Hit Return</span>
-                      </span>
-                    </div>
+                    <MaterialIcon name="auto_awesome" size={16} fill={1} color="var(--neutral-white)" />
+                  </button>
+                ) : (
+                  <div
+                    className="ai-input"
+                    id="intel-ai-toolbar-ai"
+                    role="search"
+                    aria-label="AI assistant"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') {
+                        e.stopPropagation();
+                        setAiToolbarOpen(false);
+                      }
+                    }}
+                  >
+                    <span className="ai-input-icon" aria-hidden="true">
+                      <MaterialIcon name="auto_awesome" size={16} fill={1} color="var(--color-ai)" />
+                    </span>
+                    <input
+                      ref={aiToolbarInputRef}
+                      id="intel-ai-toolbar-query"
+                      className="ai-input-text"
+                      type="text"
+                      placeholder="How can I help you?"
+                      aria-label="Ask AI"
+                    />
+                    <span className="ai-input-chip" aria-hidden="true">
+                      <span className="ai-input-chip-text">Hit Return</span>
+                    </span>
                   </div>
                 )}
               </div>
