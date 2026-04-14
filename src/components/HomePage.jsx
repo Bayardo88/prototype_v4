@@ -1,14 +1,16 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
+import { useUiState } from '../lib/uiState.jsx';
 
 /**
  * Homepage dashboard — matches `Homepage_-_Full_Dashboard` screenshot.
  */
-export function HomePage() {
+export function HomePage({ onOpenPinned }) {
   const { selectedFirm, funds } = useAppData();
   const firm = selectedFirm;
   const easy = funds.slice(0, 5);
   const metricFunds = funds.slice(0, 4);
+  const { pinnedTabs, unpinTab } = useUiState();
 
   function formatMoney(n) {
     if (typeof n !== 'number') return n ?? '';
@@ -19,6 +21,32 @@ export function HomePage() {
     <main className="home-page" id="home-page-root" aria-label="Home">
       <div className="home-tabs">
         <div className="home-tab active">Home</div>
+        {pinnedTabs.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            className="home-tab home-tab--pinned"
+            onClick={() => {
+              // If the app is wired to open the page, let App handle it.
+              // (Passed as a prop from App in the home shell.)
+              // eslint-disable-next-line no-use-before-define
+              onOpenPinned?.(t.id);
+            }}
+          >
+            <span className="home-tab-label">{t.label}</span>
+            <button
+              type="button"
+              className="home-tab-close"
+              aria-label={`Remove ${t.label}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                unpinTab(t.id);
+              }}
+            >
+              <MaterialIcon name="close" size={14} color="var(--neutral-600)" />
+            </button>
+          </button>
+        ))}
         <button type="button" className="home-tab-plus" aria-label="Add tab">
           <MaterialIcon name="add" size={16} color="var(--neutral-600)" />
         </button>

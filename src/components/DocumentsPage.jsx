@@ -1,6 +1,7 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 import { useAppData } from '../lib/appData.js';
+import { useUiState } from '../lib/uiState.jsx';
 
 function DocIcon({ kind }) {
   if (kind === 'xlsx') return <MaterialIcon name="grid_on" size={16} color="#16a34a" />;
@@ -30,6 +31,7 @@ function DocCard({ kind = 'pdf', name = 'Doc_Name.pdf', companyName = 'Company' 
 
 export function DocumentsPage() {
   const { selectedFirm, selectedFund, selectedCompany, companies } = useAppData();
+  const { pinTab } = useUiState();
   const { data: documents } = useSupabaseTable('documents', {
     select: 'id,name,company_id',
     orderBy: 'name',
@@ -71,7 +73,12 @@ export function DocumentsPage() {
             <button type="button" className="prod-btn">
               Request Information
             </button>
-            <button type="button" className="prod-iconbtn" aria-label="Pin">
+            <button
+              type="button"
+              className="prod-iconbtn"
+              aria-label="Pin"
+              onClick={() => pinTab({ id: 'documents', label: 'Documents' })}
+            >
               <MaterialIcon name="push_pin" size={16} color="var(--neutral-500)" />
             </button>
           </div>

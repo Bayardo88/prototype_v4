@@ -1,8 +1,10 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
+import { useUiState } from '../lib/uiState.jsx';
 
 export function WaterfallsPage() {
   const { selectedFirm, selectedFund, companies } = useAppData();
+  const { pinTab } = useUiState();
 
   return (
     <div className="sec-panel" id="sec-panel-waterfalls" role="tabpanel">
@@ -26,7 +28,12 @@ export function WaterfallsPage() {
               <MaterialIcon name="add" size={16} color="var(--neutral-white)" />
               Create Waterfalls
             </button>
-            <button type="button" className="prod-iconbtn" aria-label="Pin">
+            <button
+              type="button"
+              className="prod-iconbtn"
+              aria-label="Pin"
+              onClick={() => pinTab({ id: 'waterfalls', label: 'Waterfalls' })}
+            >
               <MaterialIcon name="push_pin" size={16} color="var(--neutral-500)" />
             </button>
           </div>

@@ -1247,6 +1247,20 @@
       color: var(--neutral-700);
       line-height: 14px;
     }
+    .home-tab--pinned { cursor: pointer; gap: 6px; }
+    .home-tab-label { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .home-tab-close {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .home-tab-close:hover { background: rgba(0,0,0,0.06); }
     .home-tab-plus {
       width: 22px;
       height: 22px;

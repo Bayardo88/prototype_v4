@@ -1,6 +1,7 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useSupabaseTable } from '../lib/useSupabaseTable.js';
 import { useAppData } from '../lib/appData.js';
+import { useUiState } from '../lib/uiState.jsx';
 
 function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf', companyName = 'Company' }) {
   const icon =
@@ -28,6 +29,7 @@ function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf', companyName = 'Compan
 
 export function ReportsPage() {
   const { selectedFirm, selectedFund, selectedCompany, companies } = useAppData();
+  const { pinTab } = useUiState();
   const { data: reports } = useSupabaseTable('reports', {
     select: 'id,name,company_id',
     orderBy: 'name',
@@ -65,7 +67,12 @@ export function ReportsPage() {
               <MaterialIcon name="add" size={16} color="var(--neutral-white)" />
               Create Report
             </button>
-            <button type="button" className="prod-iconbtn" aria-label="Pin">
+            <button
+              type="button"
+              className="prod-iconbtn"
+              aria-label="Pin"
+              onClick={() => pinTab({ id: 'reports', label: 'Reports' })}
+            >
               <MaterialIcon name="push_pin" size={16} color="var(--neutral-500)" />
             </button>
           </div>

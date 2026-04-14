@@ -1,10 +1,12 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useAppData } from '../lib/appData.js';
 import { useState } from 'react';
+import { useUiState } from '../lib/uiState.jsx';
 
 export function ValuationsPage() {
   const { selectedFirm, selectedFund, companies } = useAppData();
   const [bulkMode, setBulkMode] = useState(false);
+  const { pinTab } = useUiState();
 
   return (
     <div className="sec-panel" id="sec-panel-valuations" role="tabpanel">
@@ -28,7 +30,12 @@ export function ValuationsPage() {
               <MaterialIcon name="add" size={16} color="var(--neutral-white)" />
               Create New Valuation
             </button>
-            <button type="button" className="prod-iconbtn" aria-label="Pin">
+            <button
+              type="button"
+              className="prod-iconbtn"
+              aria-label="Pin"
+              onClick={() => pinTab({ id: 'valuations', label: 'Valuations' })}
+            >
               <MaterialIcon name="push_pin" size={16} color="var(--neutral-500)" />
             </button>
           </div>

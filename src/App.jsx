@@ -8,6 +8,7 @@ import { ValuationsPage } from './components/ValuationsPage.jsx';
 import { DocumentsPage } from './components/DocumentsPage.jsx';
 import { ReportsPage } from './components/ReportsPage.jsx';
 import { AppDataProvider } from './lib/appData.js';
+import { UiStateProvider } from './lib/uiState.jsx';
 
 function renderProductPage(product) {
   if (product === 'valuations') return <ValuationsPage />;
@@ -25,39 +26,42 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [product, shell]);
 
-  if (shell === 'home') {
-    return (
-      <AppDataProvider>
-        <div className="app-layout app-layout--home">
-          <PrimaryMenu
-            variant="company"
-            activeProduct="intelligence"
-            onLogoClick={() => setShell('home')}
-            onProductNavigate={(productId) => {
-              setShell('company');
-              setProduct(productId ?? 'intelligence');
-            }}
-          />
-          <HomePage />
-        </div>
-      </AppDataProvider>
-    );
-  }
-
   return (
-    <AppDataProvider>
-      <div className="app-layout app-layout--company">
-        <PrimaryMenu
-          variant="company"
-          activeProduct={product}
-          onLogoClick={() => setShell('home')}
-          onProductNavigate={(productId) => {
-            setProduct(productId ?? 'intelligence');
-          }}
-        />
-        {renderProductPage(product)}
-        <BottomBar />
-      </div>
-    </AppDataProvider>
+    <UiStateProvider>
+      <AppDataProvider>
+        {shell === 'home' ? (
+          <div className="app-layout app-layout--home">
+            <PrimaryMenu
+              variant="company"
+              activeProduct="intelligence"
+              onLogoClick={() => setShell('home')}
+              onProductNavigate={(productId) => {
+                setShell('company');
+                setProduct(productId ?? 'intelligence');
+              }}
+            />
+            <HomePage
+              onOpenPinned={(productId) => {
+                setShell('company');
+                setProduct(productId ?? 'intelligence');
+              }}
+            />
+          </div>
+        ) : (
+          <div className="app-layout app-layout--company">
+            <PrimaryMenu
+              variant="company"
+              activeProduct={product}
+              onLogoClick={() => setShell('home')}
+              onProductNavigate={(productId) => {
+                setProduct(productId ?? 'intelligence');
+              }}
+            />
+            {renderProductPage(product)}
+            <BottomBar />
+          </div>
+        )}
+      </AppDataProvider>
+    </UiStateProvider>
   );
 }
