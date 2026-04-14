@@ -28,7 +28,7 @@ export default function App() {
     return (
       <div className="app-layout app-layout--home">
         <PrimaryMenu
-          variant="home"
+          variant="company"
           activeProduct="intelligence"
           onLogoClick={() => setShell('home')}
           onProductNavigate={(productId) => {
@@ -36,16 +36,7 @@ export default function App() {
             setProduct(productId ?? 'intelligence');
           }}
         />
-        <HomePage
-          onContinueCompany={() => {
-            setShell('company');
-            setProduct('intelligence');
-          }}
-          onSelectProduct={(productId) => {
-            setShell('company');
-            setProduct(productId ?? 'intelligence');
-          }}
-        />
+        <HomePage />
       </div>
     );
   }
