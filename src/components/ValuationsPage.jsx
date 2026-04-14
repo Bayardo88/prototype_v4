@@ -1,12 +1,8 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
-import { useSupabaseTable } from '../lib/useSupabaseTable.js';
+import { useAppData } from '../lib/appData.js';
 
 export function ValuationsPage() {
-  const { data: companies } = useSupabaseTable('companies', {
-    select: 'id,name',
-    orderBy: 'name',
-    limit: 150,
-  });
+  const { selectedFirm, selectedFund, companies } = useAppData();
 
   return (
     <div className="sec-panel" id="sec-panel-valuations" role="tabpanel">
@@ -16,11 +12,11 @@ export function ValuationsPage() {
             <h1 className="prod-title">Valuations</h1>
             <div className="prod-filters">
               <button type="button" className="prod-filter-pill">
-                Filter by Firm
+                {selectedFirm?.name ?? 'Firm'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                Filter by Fund
+                {selectedFund?.name ?? 'Fund'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
             </div>

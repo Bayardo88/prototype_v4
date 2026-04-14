@@ -1,12 +1,8 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
-import { useSupabaseTable } from '../lib/useSupabaseTable.js';
+import { useAppData } from '../lib/appData.js';
 
 export function WaterfallsPage() {
-  const { data: companies } = useSupabaseTable('companies', {
-    select: 'id,name',
-    orderBy: 'name',
-    limit: 150,
-  });
+  const { selectedFirm, selectedFund, companies } = useAppData();
 
   return (
     <div className="sec-panel" id="sec-panel-waterfalls" role="tabpanel">
@@ -16,11 +12,11 @@ export function WaterfallsPage() {
             <h1 className="prod-title">Waterfalls</h1>
             <div className="prod-filters">
               <button type="button" className="prod-filter-pill">
-                Filter by Firm
+                {selectedFirm?.name ?? 'Firm'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                Filter by Fund
+                {selectedFund?.name ?? 'Fund'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
             </div>
@@ -80,7 +76,7 @@ export function WaterfallsPage() {
               <thead>
                 <tr>
                   <th>Firm Portfolio Summary</th>
-                  <th>All Funds</th>
+                  <th>{selectedFund?.name ?? 'All Funds'}</th>
                   <th>Enterpris...</th>
                   <th>Unrealiz...</th>
                   <th>MOIC</th>
@@ -93,7 +89,7 @@ export function WaterfallsPage() {
                   (c, idx) => (
                   <tr key={c.id}>
                     <td className="linkish">{c.name}</td>
-                    <td>Fund XIII</td>
+                    <td>{selectedFund?.name ?? 'All Funds'}</td>
                     <td>11/3/2025</td>
                     <td>11/3/2025</td>
                     <td>1.23x</td>

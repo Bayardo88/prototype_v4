@@ -1,7 +1,8 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useSupabaseTable } from '../lib/useSupabaseTable.js';
+import { useAppData } from '../lib/appData.js';
 
-function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
+function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf', companyName = 'Company' }) {
   const icon =
     kind === 'xlsx' ? (
       <MaterialIcon name="grid_on" size={16} color="#16a34a" />
@@ -16,7 +17,7 @@ function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
       </div>
       <div className="doc-name">{name}</div>
       <div className="doc-meta">
-        <span className="doc-pill">Company Name</span>
+        <span className="doc-pill">{companyName}</span>
         <span className="doc-cloud" aria-hidden="true">
           <MaterialIcon name="cloud" size={14} color="var(--neutral-500)" />
         </span>
@@ -26,11 +27,13 @@ function ReportCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
 }
 
 export function ReportsPage() {
+  const { selectedFirm, selectedFund, selectedCompany, companies } = useAppData();
   const { data: reports } = useSupabaseTable('reports', {
-    select: 'id,name',
+    select: 'id,name,company_id',
     orderBy: 'name',
     limit: 150,
   });
+  const companyById = new Map(companies.map((c) => [c.id, c.name]));
 
   return (
     <div className="sec-panel" id="sec-panel-reports" role="tabpanel">
@@ -40,15 +43,15 @@ export function ReportsPage() {
             <h1 className="prod-title">Reports</h1>
             <div className="prod-filters">
               <button type="button" className="prod-filter-pill">
-                Filter by Firm
+                {selectedFirm?.name ?? 'Firm'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                Filter by Fund
+                {selectedFund?.name ?? 'Fund'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                Filter by Company
+                {selectedCompany?.name ?? 'Company'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
             </div>
@@ -74,7 +77,8 @@ export function ReportsPage() {
             .map((r, idx) => {
               const kind = idx % 6 === 0 ? 'xlsx' : 'pdf';
               const name = r.name.includes('.') ? r.name : `${r.name}.${kind === 'xlsx' ? 'xlsx' : 'pdf'}`;
-              return <ReportCard key={r.id} kind={kind} name={name} />;
+              const companyName = companyById.get(r.company_id) ?? selectedCompany?.name ?? 'Company';
+              return <ReportCard key={r.id} kind={kind} name={name} companyName={companyName} />;
             })}
         </div>
       </div>

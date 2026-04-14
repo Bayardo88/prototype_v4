@@ -1,14 +1,13 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
-import { useSupabaseTable } from '../lib/useSupabaseTable.js';
+import { useAppData } from '../lib/appData.js';
 
 /**
  * Intelligence — Figma Navigation-V4, node 111-18243 (Dev Mode).
  * This is the default company workspace landing for the Intelligence product area.
  */
 export function IntelligencePage() {
-  const { data: firms } = useSupabaseTable('firms', { select: 'id,name', orderBy: 'name', limit: 150 });
-  const { data: funds } = useSupabaseTable('funds', { select: 'id,name', orderBy: 'name', limit: 150 });
-  const { data: companies } = useSupabaseTable('companies', { select: 'id,name', orderBy: 'name', limit: 150 });
+  const { selectedFirm, selectedFund, selectedCompany, funds, companies } = useAppData();
+  const selectedFundName = selectedFund?.name ?? 'All Funds';
 
   return (
     <div className="sec-panel" id="sec-panel-intelligence" role="tabpanel">
@@ -18,11 +17,11 @@ export function IntelligencePage() {
             <h1 className="intel-page-title">Intelligence</h1>
             <div className="intel-filters">
               <button type="button" className="intel-filter-pill">
-                Filter by Firm
+                {selectedFirm?.name ?? 'Firm'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="intel-filter-pill">
-                Filter by Fund
+                {selectedFund?.name ?? 'Fund'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
             </div>
@@ -55,7 +54,7 @@ export function IntelligencePage() {
         </section>
 
         <section className="intel-metrics-row" aria-label="Fund metrics">
-          {(funds.length ? funds.slice(0, 5) : Array.from({ length: 5 }).map((_, i) => ({ id: i, name: 'Fund Name Value' }))).map((f, idx) => (
+          {(funds.length ? funds.slice(0, 5) : Array.from({ length: 5 }).map((_, i) => ({ id: i, name: 'Fund' }))).map((f, idx) => (
             <div key={idx} className="intel-metric-card">
               <div className="intel-metric-ico" aria-hidden="true" />
               <div className="intel-metric-body">
@@ -101,7 +100,7 @@ export function IntelligencePage() {
               <thead>
                 <tr>
                   <th>Firm Portfolio Summary</th>
-                  <th>All Funds</th>
+                  <th>{selectedFundName}</th>
                   <th>Valuation Date</th>
                   <th>Initial Investment</th>
                   <th>Most Recent Inv...</th>
@@ -119,7 +118,7 @@ export function IntelligencePage() {
                   (c, idx) => (
                     <tr key={c.id}>
                       <td className="intel-first">{c.name}</td>
-                      <td>{funds[idx % (funds.length || 1)]?.name ?? 'All Funds'}</td>
+                      <td>{selectedFundName}</td>
                       <td>11/3/2025</td>
                       <td>11/3/2025</td>
                       <td>11/3/2025</td>

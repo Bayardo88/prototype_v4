@@ -1,5 +1,6 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
 import { useSupabaseTable } from '../lib/useSupabaseTable.js';
+import { useAppData } from '../lib/appData.js';
 
 function DocIcon({ kind }) {
   if (kind === 'xlsx') return <MaterialIcon name="grid_on" size={16} color="#16a34a" />;
@@ -8,7 +9,7 @@ function DocIcon({ kind }) {
   return <MaterialIcon name="picture_as_pdf" size={16} color="#ef4444" />;
 }
 
-function DocCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
+function DocCard({ kind = 'pdf', name = 'Doc_Name.pdf', companyName = 'Company' }) {
   return (
     <div className="doc-card" role="group" aria-label={name}>
       <div className="doc-thumb" aria-hidden="true">
@@ -18,7 +19,7 @@ function DocCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
       </div>
       <div className="doc-name">{name}</div>
       <div className="doc-meta">
-        <span className="doc-pill">Company Name</span>
+        <span className="doc-pill">{companyName}</span>
         <span className="doc-cloud" aria-hidden="true">
           <MaterialIcon name="cloud" size={14} color="var(--neutral-500)" />
         </span>
@@ -28,11 +29,14 @@ function DocCard({ kind = 'pdf', name = 'Doc_Name.pdf' }) {
 }
 
 export function DocumentsPage() {
+  const { selectedFirm, selectedFund, selectedCompany, companies } = useAppData();
   const { data: documents } = useSupabaseTable('documents', {
-    select: 'id,name',
+    select: 'id,name,company_id',
     orderBy: 'name',
     limit: 150,
   });
+
+  const companyById = new Map(companies.map((c) => [c.id, c.name]));
 
   return (
     <div className="sec-panel" id="sec-panel-documents" role="tabpanel">
@@ -42,15 +46,15 @@ export function DocumentsPage() {
             <h1 className="prod-title">Documents</h1>
             <div className="prod-filters">
               <button type="button" className="prod-filter-pill">
-                Filter by Firm
+                {selectedFirm?.name ?? 'Firm'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                Filter by Fund
+                {selectedFund?.name ?? 'Fund'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
               <button type="button" className="prod-filter-pill">
-                Filter by Company
+                {selectedCompany?.name ?? 'Company'}
                 <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
               </button>
             </div>
@@ -79,7 +83,8 @@ export function DocumentsPage() {
             .map((d, idx) => {
               const kind = idx % 10 === 5 ? 'xlsx' : 'pdf';
               const name = d.name.includes('.') ? d.name : `${d.name}.pdf`;
-              return <DocCard key={d.id} kind={kind} name={name} />;
+              const companyName = companyById.get(d.company_id) ?? selectedCompany?.name ?? 'Company';
+              return <DocCard key={d.id} kind={kind} name={name} companyName={companyName} />;
             })}
         </div>
       </div>

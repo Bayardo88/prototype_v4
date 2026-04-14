@@ -7,6 +7,7 @@ import { WaterfallsPage } from './components/WaterfallsPage.jsx';
 import { ValuationsPage } from './components/ValuationsPage.jsx';
 import { DocumentsPage } from './components/DocumentsPage.jsx';
 import { ReportsPage } from './components/ReportsPage.jsx';
+import { AppDataProvider } from './lib/appData.js';
 
 function renderProductPage(product) {
   if (product === 'valuations') return <ValuationsPage />;
@@ -26,33 +27,37 @@ export default function App() {
 
   if (shell === 'home') {
     return (
-      <div className="app-layout app-layout--home">
-        <PrimaryMenu
-          variant="company"
-          activeProduct="intelligence"
-          onLogoClick={() => setShell('home')}
-          onProductNavigate={(productId) => {
-            setShell('company');
-            setProduct(productId ?? 'intelligence');
-          }}
-        />
-        <HomePage />
-      </div>
+      <AppDataProvider>
+        <div className="app-layout app-layout--home">
+          <PrimaryMenu
+            variant="company"
+            activeProduct="intelligence"
+            onLogoClick={() => setShell('home')}
+            onProductNavigate={(productId) => {
+              setShell('company');
+              setProduct(productId ?? 'intelligence');
+            }}
+          />
+          <HomePage />
+        </div>
+      </AppDataProvider>
     );
   }
 
   return (
-    <div className="app-layout app-layout--company">
-      <PrimaryMenu
-        variant="company"
-        activeProduct={product}
-        onLogoClick={() => setShell('home')}
-        onProductNavigate={(productId) => {
-          setProduct(productId ?? 'intelligence');
-        }}
-      />
-      {renderProductPage(product)}
-      <BottomBar />
-    </div>
+    <AppDataProvider>
+      <div className="app-layout app-layout--company">
+        <PrimaryMenu
+          variant="company"
+          activeProduct={product}
+          onLogoClick={() => setShell('home')}
+          onProductNavigate={(productId) => {
+            setProduct(productId ?? 'intelligence');
+          }}
+        />
+        {renderProductPage(product)}
+        <BottomBar />
+      </div>
+    </AppDataProvider>
   );
 }

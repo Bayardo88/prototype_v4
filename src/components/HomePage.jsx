@@ -1,14 +1,12 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
-import { useSupabaseTable } from '../lib/useSupabaseTable.js';
+import { useAppData } from '../lib/appData.js';
 
 /**
  * Homepage dashboard — matches `Homepage_-_Full_Dashboard` screenshot.
  */
 export function HomePage() {
-  const { data: firms } = useSupabaseTable('firms', { select: 'id,name,firm_value,firm_value_delta', orderBy: 'name', limit: 1 });
-  const { data: funds } = useSupabaseTable('funds', { select: 'id,name', orderBy: 'name', limit: 8 });
-
-  const firm = firms[0];
+  const { selectedFirm, funds } = useAppData();
+  const firm = selectedFirm;
   const easy = funds.slice(0, 5);
   const metricFunds = funds.slice(0, 4);
 
@@ -56,7 +54,7 @@ export function HomePage() {
           <div className="home-easy">
             <div className="home-easy-title">Easy Access to Scalar’s Features</div>
             <div className="home-easy-grid" aria-hidden="true">
-              {(easy.length ? easy : Array.from({ length: 5 }).map((_, i) => ({ id: i, name: 'Fund Name Value' }))).map(
+              {(easy.length ? easy : Array.from({ length: 5 }).map((_, i) => ({ id: i, name: 'Fund' }))).map(
                 (f) => (
                   <div key={f.id} className="home-easy-tile">
                     {f.name}
@@ -68,7 +66,7 @@ export function HomePage() {
         </div>
 
         <div className="home-metrics">
-          {(metricFunds.length ? metricFunds : Array.from({ length: 4 }).map((_, i) => ({ id: i, name: 'Fund Name Value' }))).map(
+          {(metricFunds.length ? metricFunds : Array.from({ length: 4 }).map((_, i) => ({ id: i, name: 'Fund' }))).map(
             (f, idx) => (
             <div key={idx} className="home-metric">
               <div className="home-metric-ico" aria-hidden="true" />

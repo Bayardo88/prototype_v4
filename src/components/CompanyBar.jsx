@@ -1,4 +1,5 @@
 import { MaterialIcon } from './MaterialIcon.jsx';
+import { useAppData } from '../lib/appData.js';
 
 const SECONDARY_TABS = [
   { id: 'summary', label: 'Summary', tabId: 'sec-tab-summary' },
@@ -9,6 +10,7 @@ const SECONDARY_TABS = [
 ];
 
 export function CompanyBar({ activeSecondary, onSecondaryChange }) {
+  const { selectedFund } = useAppData();
   function onKeyDown(e, id) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -25,7 +27,7 @@ export function CompanyBar({ activeSecondary, onSecondaryChange }) {
       <div className="cb-left">
         <span className="company-name">Apple Inc.</span>
         <div className="fund-filter">
-          <span className="fund-filter-text">Filter by Fund</span>
+          <span className="fund-filter-text">{selectedFund?.name ?? 'Fund'}</span>
           <MaterialIcon name="expand_more" size={14} color="var(--neutral-700)" />
         </div>
         <div className="draft-chip">
