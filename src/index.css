@@ -600,75 +600,96 @@
       border-radius: 8px;
       overflow: hidden;
     }
-    .intel-table-toolbar {
+    /* Intelligence toolbar updated to match Figma node 933:24526 */
+    .tm-bar {
+      height: 40px;
+      background: var(--neutral-100);
+      border-bottom: 1px solid var(--neutral-200);
+      padding: 4px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 8px;
-      background: var(--neutral-100);
-      border-bottom: 1px solid var(--neutral-200);
+      gap: 8px;
     }
-    .intel-toolbar-left,
-    .intel-toolbar-right { display: inline-flex; align-items: center; gap: 8px; }
-    .intel-dd {
-      font: inherit;
-      font-size: 11px;
-      font-weight: 600;
-      line-height: 14px;
-      background: var(--neutral-200);
-      border: 1px solid var(--neutral-300);
-      border-radius: 6px;
-      padding: 4px 8px;
-      color: var(--neutral-900);
+    .tm-left { display: inline-flex; align-items: center; gap: 8px; }
+    .tm-chip {
+      background: var(--neutral-300);
+      border-radius: 4px;
+      padding: 8px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      cursor: pointer;
+      height: 32px;
+      cursor: default;
     }
-    .intel-iconbtn {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 1px solid var(--neutral-200);
-      background: var(--neutral-white);
+    .tm-chip-text {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+      color: var(--neutral-900);
+      white-space: nowrap;
+    }
+    .tm-iconbtn {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      border: none;
+      background: var(--neutral-100);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
     }
-    .intel-iconbtn:hover { background: var(--neutral-100); }
-    .intel-currency {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
+    .tm-iconbtn:hover { background: var(--neutral-200); }
+    .tm-right { display: inline-flex; align-items: center; gap: 8px; }
+    .tm-currency { display: inline-flex; align-items: center; }
+    .tm-cur-usd {
       background: var(--neutral-white);
       border: 1px solid var(--neutral-200);
-      border-radius: 6px;
-      font-size: 11px;
-      color: var(--neutral-700);
+      padding: 2px 4px;
+      border-radius: 4px 0 0 4px;
+      font-size: 10px;
+      line-height: 14px;
+      color: var(--text-positive);
       white-space: nowrap;
     }
-    .intel-cur-usd { font-weight: 700; color: var(--text-positive); }
-    .intel-cur-thousands { color: var(--neutral-600); }
-    .intel-save {
-      font: inherit;
-      font-size: 11px;
-      font-weight: 700;
+    .tm-cur-thousands {
+      background: var(--neutral-200);
+      padding: 2px 4px;
+      border-radius: 0 4px 4px 0;
+      font-size: 10px;
       line-height: 14px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .tm-save {
       background: var(--text-positive);
-      border: 1px solid var(--text-positive);
-      color: var(--neutral-white);
-      border-radius: 6px;
-      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 4px 4px 8px;
+      height: 24px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       cursor: pointer;
+    }
+    .tm-save-text {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+      color: var(--neutral-white);
       white-space: nowrap;
     }
-    .intel-save:hover { filter: brightness(0.95); }
+    .tm-meatball {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
     .intel-table-scroll { overflow: auto; }
     .intel-table2 {
       width: 100%;

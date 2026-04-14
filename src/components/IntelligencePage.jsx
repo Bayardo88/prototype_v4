@@ -66,31 +66,46 @@ export function IntelligencePage() {
         </section>
 
         <section className="intel-table-card" aria-label="Portfolio table">
-          <div className="intel-table-toolbar">
-            <div className="intel-toolbar-left">
-              <button type="button" className="intel-dd">
-                Summary
-                <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
-              </button>
-              <button type="button" className="intel-iconbtn" aria-label="Info">
-                <MaterialIcon name="info" size={16} color="var(--neutral-500)" />
+          <div className="tm-bar" role="toolbar" aria-label="Tertiary menu">
+            <div className="tm-left">
+              <div className="tm-chip">
+                <span className="tm-chip-text">Summary</span>
+                <MaterialIcon name="more_vert" size={16} color="var(--neutral-900)" />
+              </div>
+              <button type="button" className="tm-iconbtn" aria-label="Add view">
+                <MaterialIcon name="add" size={16} color="var(--neutral-600)" />
               </button>
             </div>
-            <div className="intel-toolbar-right">
-              <div className="intel-currency">
-                <span className="intel-cur-usd">USD</span>
-                <span className="intel-cur-thousands">($) Thousands</span>
-                <MaterialIcon name="expand_more" size={14} color="var(--neutral-600)" />
+            <div className="tm-right">
+              {/* AI trigger already standardized to design system button styles */}
+              <button className="ai-btn" type="button" aria-label="AI">
+                <img
+                  className="ai-btn-icon"
+                  src="https://www.figma.com/api/mcp/asset/06b36e9e-8896-4db1-9b28-4ae63dedb08e"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </button>
+
+              <div className="tm-currency" aria-label="Currency">
+                <div className="tm-cur-usd">USD</div>
+                <div className="tm-cur-thousands">($) Thousands</div>
               </div>
-              <button type="button" className="intel-iconbtn" aria-label="Fit screen">
+
+              <button type="button" className="tm-iconbtn" aria-label="Fit screen">
                 <MaterialIcon name="fit_screen" size={16} color="var(--neutral-500)" />
               </button>
-              <button type="button" className="intel-save">
-                Save
+              <button type="button" className="tm-iconbtn" aria-label="Filter">
+                <MaterialIcon name="filter_list" size={16} color="var(--neutral-500)" />
+              </button>
+
+              <button type="button" className="tm-save" aria-label="Save">
+                <span className="tm-save-text">Save</span>
                 <MaterialIcon name="expand_more" size={16} color="var(--neutral-white)" />
               </button>
-              <button type="button" className="intel-iconbtn" aria-label="More">
-                <MaterialIcon name="more_vert" size={18} color="var(--neutral-500)" />
+
+              <button type="button" className="tm-meatball" aria-label="More">
+                <MaterialIcon name="more_vert" size={20} color="var(--neutral-500)" />
               </button>
             </div>
           </div>
