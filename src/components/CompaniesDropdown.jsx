@@ -25,8 +25,16 @@ export function CompaniesDropdown({ onClose, onSeeAllCompanies, onSelectCompany 
       if (selectedFund && c.fund_id !== selectedFund.id) return false;
       return true;
     });
-    if (!query) return base.slice(0, MIN_ITEMS);
-    return base.filter((c) => c.name.toLowerCase().includes(query)).slice(0, MIN_ITEMS);
+    const filtered = query ? base.filter((c) => c.name.toLowerCase().includes(query)) : base;
+    const primary = filtered.slice(0, MIN_ITEMS);
+    if (primary.length >= MIN_ITEMS) return primary;
+
+    // If firm/fund filtering yields < MIN_ITEMS, top up from the full company list.
+    const used = new Set(primary.map((c) => c.id));
+    const fallback = (query ? baseAll.filter((c) => c.name.toLowerCase().includes(query)) : baseAll).filter(
+      (c) => !used.has(c.id)
+    );
+    return primary.concat(fallback.slice(0, MIN_ITEMS - primary.length));
   }, [companies, q, selectedFirm?.id, selectedFund?.id]);
 
   return (
